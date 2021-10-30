@@ -1,0 +1,3 @@
+class TripDestinationMap{
+  TripDestinationMap();
+}

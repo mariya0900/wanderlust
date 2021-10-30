@@ -1,0 +1,3 @@
+class TripGallery{
+  TripGallery();
+}

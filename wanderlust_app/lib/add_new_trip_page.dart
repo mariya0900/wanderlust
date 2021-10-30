@@ -1,0 +1,3 @@
+class AddNewTripPage{
+  AddNewTripPage();
+}

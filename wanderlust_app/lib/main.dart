@@ -1,6 +1,13 @@
 import 'package:flutter/material.dart';
-
+import 'trip.dart';
 import 'my_login_page.dart';
+import 'homepage_my_trips.dart';
+import 'add_new_trip_page.dart';
+import 'selected_trip_page.dart';
+import 'trip_destination_map.dart';
+import 'trip_gallery.dart';
+import 'trip_itinerary.dart';
+import 'trip_set_reminder.dart';
 
 void main() {
   runApp(const MyApp());
@@ -13,12 +20,22 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Wanderlust App',
       theme: ThemeData(
         
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.green,
       ),
       home: MyLoginPage(),
+      routes: {
+        '/login_successful': (context) => HomepageMyTrips(),
+        '/open_map': (context) => TripDestinationMap(),
+        '/open_gallery': (context) => TripGallery(),
+        '/open_itinerary': (context) => TripItinerary(),
+        '/set_reminder': (context) => TripSetReminder(),
+
+        //'/new_trip': (context) => AddNewTripPage(),
+        //'/view_trip': (context) => SelectedTripPage(),
+      },
     );
   }
 }

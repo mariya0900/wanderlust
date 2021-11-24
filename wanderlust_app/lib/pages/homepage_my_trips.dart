@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../trip.dart';
+import '/classes/trip.dart';
 import 'selected_trip_page.dart';
 import 'add_new_trip_page.dart';
 // this should save to the cloud

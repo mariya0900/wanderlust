@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../trip.dart';
+import '/classes/trip.dart';
 
 // The _activeTrip may have to get passed to each of navigator pushes below
 

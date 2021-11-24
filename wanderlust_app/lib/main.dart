@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'trip.dart';
+import 'classes/trip.dart';
 import 'pages/auth/login_page.dart';
 import 'pages/homepage_my_trips.dart';
 import 'pages/add_new_trip_page.dart';
 import 'pages/selected_trip_page.dart';
-import 'pages/trip_destination_map.dart';
-import 'pages/trip_gallery.dart';
-import 'pages/trip_itinerary.dart';
-import 'trip_set_reminder.dart';
+import 'pages/trip_destination_map_page.dart';
+import 'pages/trip_gallery_page.dart';
+import 'pages/trip_itinerary_page.dart';
+import 'pages/trip_set_reminder_page.dart';
 
 void main() {
   runApp(const MyApp());

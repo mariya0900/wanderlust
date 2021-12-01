@@ -18,8 +18,8 @@ class _HomepageMyTripsState extends State<HomepageMyTrips> {
   // for UI testing purposes
   //Trip test1 = Trip('Test Trip One', 2022, Duration(days: 7), 10, 'just a test 1');
 
-  Trip test1 = Trip('Test Trip One', 2022, 'One Week', 10, 'just a test 1');
-  Trip test2 = Trip('Test Trip Two', 2022, 'Three Days', 5, 'just a test 2');
+  Trip test1 = Trip('Test Trip One', '2022', 'One Week', '10', 'just a test 1');
+  Trip test2 = Trip('Test Trip Two', '2022', 'Three Days', '5', 'just a test 2');
   List<Trip> trips = [];
 
   @override

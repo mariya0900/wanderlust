@@ -51,7 +51,7 @@ class SelectedTripPage extends StatelessWidget {
                                 style: TextStyle(
                                     fontSize: 28, fontWeight: FontWeight.bold)),
                             TextSpan(
-                                text: _months[_activeTrip.month! - 1],
+                                text: _activeTrip.month,
                                 style: TextStyle(fontSize: 16)),
                             TextSpan(
                                 text: ' ~ ${_activeTrip.duration}',

@@ -29,6 +29,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_local_notifications:
 
   #firebase_core: 
   #cloud_firestore:

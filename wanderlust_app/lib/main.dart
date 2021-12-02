@@ -8,9 +8,13 @@ import 'pages/trip_destination_map_page.dart';
 import 'pages/trip_gallery_page.dart';
 import 'pages/trip_itinerary_page.dart';
 import 'pages/trip_set_reminder_page.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:timezone/data/latest.dart' as tz;
+import 'package:timezone/timezone.dart' as tz;
 
 void main() {
   runApp(const MyApp());
+  tz.initializeTimeZones();
 }
 
 class MyApp extends StatelessWidget {

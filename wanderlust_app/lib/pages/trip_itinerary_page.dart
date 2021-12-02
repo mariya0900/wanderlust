@@ -6,7 +6,8 @@ import 'package:wanderlust_app/pages/add_new_activity_page.dart';
 
 class TripItinerary extends StatefulWidget {
   final Trip trip;
-  List<Activity> itinerary=[Activity("someActivity", "28 July", "Toronto, Canada", "1 week", "CN tower, Ripleys blablabla")];
+  List<Activity> itinerary=[];
+  
 
   TripItinerary({Key? key, required this.trip, required this.itinerary})
       : super(key: key);
@@ -16,6 +17,7 @@ class TripItinerary extends StatefulWidget {
 }
 
 class _TripItineraryState extends State<TripItinerary> {
+ 
   @override
   Widget build(BuildContext context) {
     return Scaffold(

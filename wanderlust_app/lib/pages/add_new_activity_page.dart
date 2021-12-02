@@ -43,11 +43,7 @@ class _AddNewActivityPageState extends State<AddNewActivityPage> {
                   widget.itinerary.add(newActivity);
                 });
                 Navigator.pop(context, true);
-                // Navigator.popAndPushNamed(context, '/open_itinerary');
-                    /*Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => TripItinerary(trip:_activeTrip)));*/
+               
               }
             },
             icon: Icon(Icons.save),

@@ -52,4 +52,11 @@ class Trip{
 
   Trip(this.title, this.year, this.duration, this.month, this.description);
 
+  void setItinerary(List<Activity> it){
+    itinerary=it;
+  }
+  List<Activity> getItinerary(){
+    return itinerary;
+  }
+
 }

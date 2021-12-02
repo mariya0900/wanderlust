@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wanderlust_app/pages/trip_itinerary_page.dart';
 import '/classes/trip.dart';
 
 // The _activeTrip may have to get passed to each of navigator pushes below
@@ -74,7 +75,11 @@ class SelectedTripPage extends StatelessWidget {
                 GestureDetector(
                   child: makeOptionContainer(Colors.green[50], 'Itinerary'),
                   onTap: () {
-                    Navigator.pushNamed(context, '/open_itinerary');
+                    //Navigator.pushNamed(context, '/open_itinerary');
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => TripItinerary(trip:_activeTrip, itinerary: _activeTrip.getItinerary(),)));
                   },
                 ),
                 GestureDetector(

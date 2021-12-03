@@ -1,4 +1,6 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:wanderlust_app/pages/auth/create_account_page.dart';
 import 'classes/trip.dart';
 import 'pages/auth/login_page.dart';
 import 'pages/homepage_my_trips.dart';
@@ -12,7 +14,9 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:timezone/data/latest.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(const MyApp());
   tz.initializeTimeZones();
 }
@@ -30,6 +34,7 @@ class MyApp extends StatelessWidget {
       ),
       home: MyLoginPage(),
       routes: {
+        '/create_account': (context) => CreateAccountPage(),
         '/login_successful': (context) => HomepageMyTrips(),
         '/open_map': (context) => TripDestinationMap(),
         '/open_gallery': (context) => TripGallery(),

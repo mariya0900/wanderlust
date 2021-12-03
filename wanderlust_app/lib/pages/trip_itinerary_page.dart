@@ -78,9 +78,10 @@ class _TripItineraryState extends State<TripItinerary> {
                         trailing: Column(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
-                              Text(widget.itinerary[index].date),
                               Text(
-                                widget.itinerary[index].duration,
+                                  "${widget.itinerary[index].date.day}/${widget.itinerary[index].date.month}/${widget.itinerary[index].date.year}"),
+                              Text(
+                                "${widget.itinerary[index].startTime.hour}:${widget.itinerary[index].startTime.minute} - ${widget.itinerary[index].endTime.hour}:${widget.itinerary[index].endTime.minute}",
                                 style: const TextStyle(color: Colors.grey),
                               )
                             ]),

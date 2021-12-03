@@ -13,37 +13,35 @@ class AddNewActivityPage extends StatefulWidget {
 }
 
 class _AddNewActivityPageState extends State<AddNewActivityPage> {
-  GlobalKey <FormState>_formKey=GlobalKey<FormState>();
+  GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final nameController = TextEditingController();
-  final dateController = TextEditingController();
   final locationController = TextEditingController();
-  final durationController = TextEditingController();
   final additionalController = TextEditingController();
-  String name='';
-  String date='';
-  String location='';
-  String duration='';
-  String additionalInfo='';
-  
-  String description='';
+  String name = '';
+  String location = '';
+  String additionalInfo = '';
+  DateTime date = DateTime.now();
+  TimeOfDay startTime = TimeOfDay(hour: 7, minute: 15);
+  TimeOfDay endTime = TimeOfDay(hour: 7, minute: 15);
+  String timeOfActivity = '';
+
+  String description = '';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(title: Text("New Activity"), actions: [
           IconButton(
             onPressed: () {
-              if (_formKey.currentState!.validate()){
+              if (_formKey.currentState!.validate()) {
                 setState(() {
-                  name=nameController.text;
-                  date=dateController.text;
-                  location=locationController.text;
-                  duration=durationController.text;
-                  additionalInfo=additionalController.text;
-                  Activity newActivity=Activity(name, date, location, duration, additionalInfo);
+                  name = nameController.text;
+                  location = locationController.text;
+                  additionalInfo = additionalController.text;
+                  Activity newActivity = Activity(
+                      name, date, startTime, endTime, location, additionalInfo);
                   widget.itinerary.add(newActivity);
                 });
                 Navigator.pop(context, true);
-               
               }
             },
             icon: Icon(Icons.save),
@@ -63,9 +61,49 @@ class _AddNewActivityPageState extends State<AddNewActivityPage> {
                 padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
               ),
               Container(
-                  child: TextField(
-                    controller: dateController,
-                    decoration: InputDecoration(labelText: "Date"),
+                  child: Row(
+                    children: [
+                      Text("Date:                          ",
+                          style: TextStyle(fontSize: 16)),
+                      Container(
+                        child: ElevatedButton(
+                            onPressed: () {
+                              _selectDate(context);
+                            },
+                            child:
+                                Text("${date.day}/${date.month}/${date.year}")),
+                      ),
+                    ],
+                  ),
+                  padding:
+                      EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0)),
+              Container(
+                  child: Row(
+                    children: [
+                      Text("Start Time:                     ",
+                          style: TextStyle(fontSize: 16)),
+                      Container(
+                        child: ElevatedButton(
+                          onPressed: _selectStartTime,
+                          child: Text("${startTime.hour}:${startTime.minute}"),
+                        ),
+                      ),
+                    ],
+                  ),
+                  padding:
+                      EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0)),
+              Container(
+                  child: Row(
+                    children: [
+                      Text(" End Time:                      ",
+                          style: TextStyle(fontSize: 16)),
+                      Container(
+                        child: ElevatedButton(
+                          onPressed: _selectEndTime,
+                          child: Text("${endTime.hour}:${endTime.minute}"),
+                        ),
+                      ),
+                    ],
                   ),
                   padding:
                       EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0)),
@@ -73,13 +111,6 @@ class _AddNewActivityPageState extends State<AddNewActivityPage> {
                   child: TextField(
                     controller: locationController,
                     decoration: InputDecoration(labelText: "Location"),
-                  ),
-                  padding:
-                      EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0)),
-              Container(
-                  child: TextField(
-                    controller: durationController,
-                    decoration: InputDecoration(labelText: "Duration"),
                   ),
                   padding:
                       EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0)),
@@ -93,5 +124,42 @@ class _AddNewActivityPageState extends State<AddNewActivityPage> {
             ],
           ),
         ));
+  }
+
+  _selectDate(BuildContext context) async {
+    final DateTime? selected = await showDatePicker(
+      context: context,
+      initialDate: date,
+      firstDate: DateTime(2010),
+      lastDate: DateTime(2025),
+    );
+    if (selected != null && selected != date)
+      setState(() {
+        date = selected;
+      });
+  }
+
+  _selectStartTime() async {
+    final TimeOfDay? newTime = await showTimePicker(
+      context: context,
+      initialTime: startTime,
+    );
+    if (newTime != null) {
+      setState(() {
+        startTime = newTime;
+      });
+    }
+  }
+
+  _selectEndTime() async {
+    final TimeOfDay? newTime = await showTimePicker(
+      context: context,
+      initialTime: endTime,
+    );
+    if (newTime != null) {
+      setState(() {
+        endTime = newTime;
+      });
+    }
   }
 }

@@ -6,15 +6,17 @@ class DatabaseService {
 
   CollectionReference trips = FirebaseFirestore.instance.collection('trips');
 
-  Future<void> addTrip(
-      {required String title,
+  void addTrip(
+      {required String uid,
+      required String title,
       required String year,
       required String duration,
       required String month,
       required String description}) {
     // Call the user's CollectionReference to add a new user
-    return trips
+    trips
         .add({
+          'uid': uid,
           'title': title,
           'year': year,
           'duration': duration,

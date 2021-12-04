@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:timezone/data/latest.dart' as tz;
+import 'package:timezone/timezone.dart' as tz;
 
 class TripNotification {
   BuildContext context;
@@ -33,13 +35,19 @@ class TripNotification {
             ));
   }
 
-  Future showNotification() async {
-    // ignore: prefer_const_constructors
+  Future showScheduledNotification(
+      DateTime day, TimeOfDay time, String message) async {
     var android = AndroidNotificationDetails("channelId", "channelName",
         priority: Priority.high, importance: Importance.max);
     var platformDetails = NotificationDetails(android: android);
-    await notification.show(100, "Simple Notification",
-        "This is a simple notification", platformDetails,
-        payload: "a demo payload");
+    await notification.zonedSchedule(
+        101,
+        "Wanderlust Notification",
+        message,
+        tz.TZDateTime.from(day, tz.local).add(const Duration(seconds: 5)),
+        platformDetails,
+        uiLocalNotificationDateInterpretation:
+            UILocalNotificationDateInterpretation.absoluteTime,
+        androidAllowWhileIdle: true);
   }
 }

@@ -116,7 +116,9 @@ class _FormWidgetState extends State<FormWidget> {
                         padding: const EdgeInsets.only(top: 15),
                         child: TextButton(
                           child: const Text("Forgot Password?"),
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.pushNamed(context, '/reset_password');
+                          },
                         ),
                       ),
                       Padding(

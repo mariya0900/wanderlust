@@ -30,7 +30,7 @@ class Activity {
 
   // Maps Json to Activity
   factory Activity.fromJson(Map<String, dynamic> json) {
-    Activity trip = Activity(
+    Activity activity = Activity(
         json['name'],
         DateTime.parse(json['date']),
         TimeOfDay(
@@ -41,6 +41,6 @@ class Activity {
             minute: int.parse(json['endTime'].split(":")[1])),
         json['location'],
         json['additionalInfo']);
-    return trip;
+    return activity;
   }
 }

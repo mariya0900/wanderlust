@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:wanderlust_app/pages/trip_gallery_page.dart';
 import 'package:wanderlust_app/pages/trip_itinerary_page.dart';
 import '/classes/trip.dart';
+import 'package:camera/camera.dart';
 
 // The _activeTrip may have to get passed to each of navigator pushes below
+List<CameraDescription> cameras = [];
 
 class SelectedTripPage extends StatelessWidget {
   final Trip _activeTrip;
@@ -77,9 +80,12 @@ class SelectedTripPage extends StatelessWidget {
                   onTap: () {
                     //Navigator.pushNamed(context, '/open_itinerary');
                     Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => TripItinerary(trip:_activeTrip, itinerary: _activeTrip.getItinerary(),)));
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => TripItinerary(
+                                  trip: _activeTrip,
+                                  itinerary: _activeTrip.getItinerary(),
+                                )));
                   },
                 ),
                 GestureDetector(
@@ -101,9 +107,16 @@ class SelectedTripPage extends StatelessWidget {
               children: [
                 GestureDetector(
                   child: makeOptionContainer(Colors.green[50], 'Gallery'),
-                  onTap: () {
-                    Navigator.pushNamed(context, '/open_gallery');
-                    //Navigator.push(context, MaterialPageRoute(builder: (context) => SelectedTripPage(_activeTrip)));
+                  onTap: () async {
+                    cameras = await availableCameras();
+                    _activeTrip.setCamera(cameras);
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => TripGallery(
+                                trip: _activeTrip,
+                                gallery: _activeTrip.getGallery(),
+                                cameras: _activeTrip.getCamera())));
                   },
                 ),
                 GestureDetector(

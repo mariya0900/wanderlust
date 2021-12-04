@@ -3,7 +3,7 @@ import 'package:wanderlust_app/services/auth_service.dart';
 
 // ref lab 7, exercise 6
 
-class CreateAccountPage extends StatelessWidget {
+class PasswordResetPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(body: FormWidget());
@@ -20,7 +20,6 @@ class FormWidget extends StatefulWidget {
 class _FormWidgetState extends State<FormWidget> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController emailController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
 
   final AuthService fbAuthService = AuthService();
 
@@ -53,7 +52,7 @@ class _FormWidgetState extends State<FormWidget> {
                         const Padding(
                           padding: EdgeInsets.only(bottom: 30, top: 40),
                           child: Text(
-                            "Sign Up",
+                            "Forgot Your Password?",
                             style: TextStyle(
                                 color: Colors.black,
                                 fontSize: 32,
@@ -85,57 +84,6 @@ class _FormWidgetState extends State<FormWidget> {
                             onSaved: (value) {}),
                         Padding(
                           padding: const EdgeInsets.only(top: 15),
-                          child: TextFormField(
-                            // write the validator and onSaved
-                            controller: passwordController,
-                            obscureText: true,
-                            enableSuggestions: false,
-                            autocorrect: false,
-                            decoration: InputDecoration(
-                                hintText: 'Password',
-                                contentPadding: const EdgeInsets.all(20),
-                                prefixIcon:
-                                    const Icon(Icons.lock_outline_rounded),
-                                filled: true,
-                                fillColor: Colors.white.withAlpha(200),
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(35),
-                                )),
-                            validator: (value) {
-                              Pattern upper = r'^.*[A-Z]+.*$';
-                              Pattern lower = r'^.*[a-z]+.*$';
-                              Pattern digit = r'^.*[0-9]+.*$';
-                              Pattern special = r'^.*[!@#\$&*~]+.*$';
-                              Pattern length = r'^.{8,}';
-
-                              if (!RegExp(length.toString())
-                                  .hasMatch(value.toString())) {
-                                return 'Password must be atleast 8 characters in length';
-                              }
-                              if (!RegExp(upper.toString())
-                                  .hasMatch(value.toString())) {
-                                return 'Password should contain atleast one upper case';
-                              }
-                              if (!RegExp(lower.toString())
-                                  .hasMatch(value.toString())) {
-                                return 'Password should contain atleast one lower case';
-                              }
-                              if (!RegExp(digit.toString())
-                                  .hasMatch(value.toString())) {
-                                return 'Password should contain atleast one digit';
-                              }
-                              if (!RegExp(special.toString())
-                                  .hasMatch(value.toString())) {
-                                return 'Password should contain atleast one special character';
-                              } else {
-                                return null;
-                              }
-                            },
-                            onSaved: (value) {},
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 15),
                           child: SizedBox(
                             width: double.infinity,
                             child: ElevatedButton(
@@ -146,33 +94,23 @@ class _FormWidgetState extends State<FormWidget> {
                                         borderRadius:
                                             BorderRadius.circular(35))),
                                 onPressed: () {
-                                  // can validate and save be rewritten?
                                   if (_formKey.currentState!.validate()) {
                                     _formKey.currentState!.save();
 
                                     fbAuthService
-                                        .signUpWithEmail(
-                                            email: emailController.text,
-                                            password: passwordController.text)
+                                        .resetPassword(
+                                            email: emailController.text)
                                         .then((value) => {
-                                              if (value != 'Account Created')
-                                                {
-                                                  ScaffoldMessenger.of(context)
-                                                      .showSnackBar(SnackBar(
-                                                          content: Text(value
-                                                              .toString())))
-                                                }
-                                              else
-                                                {
-                                                  Navigator.pushNamed(context,
-                                                      '/login_successful')
-                                                }
+                                              ScaffoldMessenger.of(context)
+                                                  .showSnackBar(SnackBar(
+                                                      content: Text(
+                                                          value.toString())))
                                             });
                                     //might need to give login successful the email in order to load the correct information
 
                                   }
                                 },
-                                child: const Text("Create Account")),
+                                child: const Text("Reset Password")),
                           ),
                         ),
                       ]),

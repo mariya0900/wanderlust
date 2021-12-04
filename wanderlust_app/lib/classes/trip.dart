@@ -1,15 +1,18 @@
 //https://api.flutter.dev/flutter/intl/DateFormat-class.html
 import 'dart:convert';
-
+import 'dart:io';
 import 'package:intl/intl.dart';
 import 'location.dart';
 import 'activity.dart';
+import 'package:camera/camera.dart';
 
 // add intl: 0.17.0 to dependencies in the pubspec.yaml
 // Edit this when working on Add Trip page
 
 class Trip {
   List<Activity> itinerary = [];
+  List<String> gallery = [];
+  List<CameraDescription> cameras = [];
 
   String title = '',
       startDate = '',
@@ -64,6 +67,23 @@ class Trip {
 
   List<Activity> getItinerary() {
     return itinerary;
+  }
+
+  void setGallery(List<String> gal) {
+    gallery = gal;
+  }
+
+  List<String> getGallery() {
+    return gallery;
+  }
+
+  void setCamera(List<CameraDescription> cam) async {
+    cameras = await availableCameras();
+    cameras = cam;
+  }
+
+  List<CameraDescription> getCamera() {
+    return cameras;
   }
 
   // Maps Json to Trip Object

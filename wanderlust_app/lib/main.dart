@@ -37,7 +37,7 @@ class MyApp extends StatelessWidget {
         '/create_account': (context) => CreateAccountPage(),
         '/login_successful': (context) => HomepageMyTrips(),
         '/open_map': (context) => TripDestinationMap(),
-        '/open_gallery': (context) => TripGallery(),
+        //'/open_gallery': (context) => TripGallery(),
         //'/open_itinerary': (context) => TripItinerary(trip: _activeTrip,),
         '/set_reminder': (context) => TripSetReminder(),
 

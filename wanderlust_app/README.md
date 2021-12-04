@@ -26,3 +26,17 @@ if (currentUser != null) {
     });
 }
 ```
+
+### Data Structure
+```
+UserData
+    uid
+    Trips
+        0
+            title
+            ..
+            itinerary
+                0
+                    name
+                    ..    
+```

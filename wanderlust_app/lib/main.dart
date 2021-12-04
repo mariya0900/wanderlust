@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:wanderlust_app/pages/auth/create_account_page.dart';
+import 'package:wanderlust_app/pages/auth/password_reset_page.dart';
 import 'classes/trip.dart';
 import 'pages/auth/login_page.dart';
 import 'pages/homepage_my_trips.dart';
@@ -36,6 +37,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/create_account': (context) => CreateAccountPage(),
         '/login_successful': (context) => HomepageMyTrips(),
+        '/reset_password': (context) => PasswordResetPage(),
         '/open_map': (context) => TripDestinationMap(),
         '/open_gallery': (context) => TripGallery(),
         //'/open_itinerary': (context) => TripItinerary(trip: _activeTrip,),

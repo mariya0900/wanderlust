@@ -1,16 +1,28 @@
-# wanderlust_app
+# Wanderlust
 
-A new Flutter project.
+## Instructions
 
-## Getting Started
+### Save User Data
+To save user data to DB.
+```
+var currentUser = FirebaseAuth.instance.currentUser;
+if (currentUser != null) {
+    UserData testuser =
+        UserData(uid: currentUser.uid, trips: trips);
+    dbService.addUser(user: testuser);
+}
+```
 
-This project is a starting point for a Flutter application.
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+### Get User Data
+To get the user from DB. User contains trips and activities within trips.
+```
+var currentUser = FirebaseAuth.instance.currentUser;
+if (currentUser != null) {
+    UserData user;
+    dbService.getUserData(uid: currentUser.uid).then((value) {
+    user = UserData.fromJson(value);
+    //print(user.trips[0].title);
+    });
+}
+```

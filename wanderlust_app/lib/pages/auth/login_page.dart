@@ -1,5 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:wanderlust_app/services/auth_service.dart';
+import 'package:wanderlust_app/services/database_service.dart';
 
 // ref lab 7, exercise 6
 
@@ -23,6 +25,7 @@ class _FormWidgetState extends State<FormWidget> {
   final TextEditingController passwordController = TextEditingController();
 
   final AuthService fbAuthService = AuthService();
+  final DatabaseService dbService = DatabaseService();
 
   @override
   Widget build(BuildContext context) {

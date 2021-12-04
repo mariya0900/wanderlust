@@ -1,46 +1,52 @@
 //https://api.flutter.dev/flutter/intl/DateFormat-class.html
+import 'dart:convert';
+
 import 'package:intl/intl.dart';
 import 'location.dart';
 import 'activity.dart';
 
-// add intl: 0.17.0 to dependencies in the pubspec.yaml 
+// add intl: 0.17.0 to dependencies in the pubspec.yaml
 // Edit this when working on Add Trip page
 
-class Trip{
-
+class Trip {
   List<Activity> itinerary = [];
 
-  String title = '', startDate = '', endDate = '', duration = '', year = '', month = ''; 
-  late String ?description = '';
+  String title = '',
+      startDate = '',
+      endDate = '',
+      duration = '',
+      year = '',
+      month = '';
+  late String? description = '';
 
   //DateTime.now().year sets current year by default
   //int ?month=DateTime.now().month;
-  
+
   //late Duration _duration;
   //late Location _location;
-  
-  void setYear(DateTime? date){
+
+  void setYear(DateTime? date) {
     year = DateFormat('y').format(date!);
   }
 
-  void setMonth(DateTime? date){
+  void setMonth(DateTime? date) {
     month = DateFormat('MMMM').format(date!);
   }
 
-  void setStartDate(DateTime? date){
+  void setStartDate(DateTime? date) {
     // MONTH_WEEKDAY_DAY
     startDate = DateFormat('MMMMEEEEd').format(date!);
   }
-  
-  void setEndDate(DateTime? date){
+
+  void setEndDate(DateTime? date) {
     endDate = DateFormat('MMMMEEEEd').format(date!);
   }
 
-  void setDuration(){
+  void setDuration() {
     duration = startDate + ' to ' + endDate;
   }
 
-  void setDescription(String descr){
+  void setDescription(String descr) {
     description = descr;
   }
 
@@ -52,11 +58,44 @@ class Trip{
 
   Trip(this.title, this.year, this.duration, this.month, this.description);
 
-  void setItinerary(List<Activity> it){
-    itinerary=it;
+  void setItinerary(List<Activity> it) {
+    itinerary = it;
   }
-  List<Activity> getItinerary(){
+
+  List<Activity> getItinerary() {
     return itinerary;
   }
 
+  // Maps Json to Trip Object
+  factory Trip.fromJson(Map<String, dynamic> json) {
+    Trip trip = Trip(json['title'], json['startDate'], json['endDate'],
+        json['duration'], json['month']);
+
+    trip.description = json['description'];
+
+    List<Activity> activityList = json['itinerary'].map<Activity>((activity) {
+      return Activity.fromJson(activity);
+    }).toList();
+
+    trip.itinerary = activityList;
+    return trip;
+  }
+
+  // Maps Trip Object to Json
+  Map<String, dynamic> toJson() {
+    List<Map<String, dynamic>> convertedActivities = [];
+    itinerary.forEach((activity) {
+      Activity thisActivity = activity as Activity;
+      convertedActivities.add(thisActivity.toJson());
+    });
+    return {
+      'title': title,
+      'startDate': startDate.toString(),
+      'endDate': endDate.toString(),
+      'duration': duration.toString(),
+      'month': month.toString(),
+      'description': description,
+      'itinerary': convertedActivities
+    };
+  }
 }

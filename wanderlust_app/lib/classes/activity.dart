@@ -17,7 +17,15 @@ class Activity {
   Activity(this.name, this.date, this.startTime, this.endTime, this.location,
       this.additionalInfo);
   
- 
+  void setLocation(String location) async{
+    List<Location> locations = await locationFromAddress(location);
+    var first=locations.first;
+                  //print("${first.latitude} : ${first.longitude}");
+    this.location+='-';
+    this.location+=first.latitude.toString();
+    this.location+=':';
+    this.location+=first.longitude.toString();
+  }
 
   // Maps Activity to Json
   Map<String, dynamic> toJson() {

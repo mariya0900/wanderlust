@@ -45,21 +45,23 @@ class _AddNewActivityPageState extends State<AddNewActivityPage> {
           IconButton(
             onPressed: () {
               if (_formKey.currentState!.validate()) {
-                setState(() async {
+                setState(() {
                   name = nameController.text;
                   location=locationController.text;
-                  final query = locationController.text;
+                  
+                  /*final query = locationController.text;
                   List<Location> locations = await locationFromAddress(query);
                   var first=locations.first;
                   location+='-';
                   location+=first.latitude.toString();
                   location+=':';
-                  location+=first.longitude.toString();
+                  location+=first.longitude.toString();*/
                   //print("${first.latitude} : ${first.longitude}");
                   //coordinates.add(LatLng(first.latitude, first.longitude));
                   additionalInfo = additionalController.text;
                   Activity newActivity = Activity(
                       name, date, startTime, endTime, location, additionalInfo);
+                  newActivity.setLocation(location);
                   widget.itinerary.add(newActivity);
 
                   /*Navigator.push(

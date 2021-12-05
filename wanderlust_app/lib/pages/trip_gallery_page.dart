@@ -7,6 +7,16 @@ import 'package:wanderlust_app/classes/trip.dart';
 import 'package:wanderlust_app/pages/add_new_activity_page.dart';
 import 'package:wanderlust_app/pages/add_new_image.dart';
 import 'package:camera/camera.dart';
+import 'package:wanderlust_app/classes/userdata.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:wanderlust_app/services/database_service.dart';
+import 'package:wanderlust_app/services/storage_service.dart';
+
+var currentUser = FirebaseAuth.instance.currentUser;
+UserData user = UserData(uid: "", trips: []);
+DatabaseService dbService = DatabaseService();
+StorageService ssService = StorageService();
 
 class TripGallery extends StatefulWidget {
   final Trip trip;
@@ -28,6 +38,20 @@ class _TripGalleryState extends State<TripGallery> {
 
   @override
   Widget build(BuildContext context) {
+    if (currentUser != null) {
+      print("HELP OH GsssOD");
+      dbService.getUserData(uid: currentUser!.uid).then((value) {
+        user = UserData.fromJson(value);
+        //print(user.trips[0].title);
+      });
+    }
+    int currentTrip = 0;
+    for (int i = 0; i < user.trips.length; i++) {
+      if (user.trips[i].title == widget.trip.title) {
+        currentTrip = i;
+        print("Epic: " + widget.trip.title + " $currentTrip");
+      }
+    }
     return Scaffold(
       appBar: AppBar(
         title: Text('Gallery'),
@@ -42,6 +66,9 @@ class _TripGalleryState extends State<TripGallery> {
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 4, mainAxisSpacing: 1),
               itemBuilder: (BuildContext context, index) {
+                ssService.getImageIds(uid: user.uid, tripId: currentTrip);
+                ssService.getUrl(fullPath: ssService.imageID[index]);
+                print("Yoooo: " + ssService.url);
                 return Container(
                   padding: const EdgeInsets.all(10),
                   decoration: BoxDecoration(
@@ -49,11 +76,11 @@ class _TripGalleryState extends State<TripGallery> {
                           ? (Colors.blue)
                           : (Colors.transparent)),
                   child: GestureDetector(
-                    child: Image.file(
-                      File(widget.gallery[index]),
+                    child: Image.network(
+                      ssService.url,
                       fit: BoxFit.cover,
                     ),
-                    key: Key(widget.gallery[index]),
+                    key: Key(ssService.url),
                     onTap: () {
                       print("Word");
                     },
@@ -67,7 +94,7 @@ class _TripGalleryState extends State<TripGallery> {
               MaterialPageRoute(
                   builder: (context) => AddNewImage(
                       trip: widget.trip,
-                      gallery: widget.gallery,
+                      gallery: user.trips[currentTrip].gallery,
                       cameras: widget.cameras)));
           if (result == true) {
             setState(() {});

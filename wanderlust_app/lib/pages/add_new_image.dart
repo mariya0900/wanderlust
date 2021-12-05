@@ -6,6 +6,16 @@ import 'package:wanderlust_app/pages/trip_gallery_page.dart';
 import 'package:wanderlust_app/pages/trip_itinerary_page.dart';
 import 'package:camera/camera.dart';
 import 'package:wanderlust_app/classes/trip.dart';
+import 'package:wanderlust_app/classes/userdata.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:wanderlust_app/services/database_service.dart';
+import 'package:wanderlust_app/services/storage_service.dart';
+
+var currentUser = FirebaseAuth.instance.currentUser;
+UserData user = UserData(uid: "2", trips: []);
+DatabaseService dbService = DatabaseService();
+StorageService ssService = StorageService();
 
 class AddNewImage extends StatefulWidget {
   final Trip trip;
@@ -39,6 +49,12 @@ class _AddNewImageState extends State<AddNewImage> {
 
   @override
   Widget build(BuildContext context) {
+    if (currentUser != null) {
+      dbService.getUserData(uid: currentUser!.uid).then((value) {
+        user = UserData.fromJson(value);
+        //print(user.trips[0].title);
+      });
+    }
     return Scaffold(
       appBar: AppBar(title: Text("Take Picture")),
       body: FutureBuilder(
@@ -55,7 +71,16 @@ class _AddNewImageState extends State<AddNewImage> {
         onPressed: () async {
           var image = await _controller.takePicture();
           print(image.path);
-          widget.gallery.add(image.path);
+          //widget.gallery.add(image.path);
+          for (int i = 0; i < user.trips.length; i++) {
+            if (user.trips[i].title == widget.trip.title) {
+              print(image.path);
+              print(user.trips.length);
+              print(i);
+              ssService.uploadImage(
+                  filePath: image.path, uid: user.uid, tripId: i);
+            }
+          }
           Navigator.pop(context, true);
         },
         child: Icon(Icons.camera),

@@ -21,11 +21,17 @@ class _AddNewActivityPageState extends State<AddNewActivityPage> {
   String location = '';
   String additionalInfo = '';
   DateTime date = DateTime.now();
-  TimeOfDay startTime = TimeOfDay(hour: 7, minute: 15);
-  TimeOfDay endTime = TimeOfDay(hour: 7, minute: 15);
+  TimeOfDay startTime = TimeOfDay(hour: 0, minute: 00);
+  TimeOfDay endTime = TimeOfDay(hour: 0, minute: 00);
   String timeOfActivity = '';
-
   String description = '';
+  String startTimeTextHour = "12:";
+  String startTimeTextMinute = "00";
+  String startTimeTextEnd = " am";
+  String endTimeTextHour = "12:";
+  String endTimeTextMinute = "00";
+  String endTimeTextEnd = " am";
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -84,8 +90,12 @@ class _AddNewActivityPageState extends State<AddNewActivityPage> {
                           style: TextStyle(fontSize: 16)),
                       Container(
                         child: ElevatedButton(
-                          onPressed: _selectStartTime,
-                          child: Text("${startTime.hour}:${startTime.minute}"),
+                          onPressed: () {
+                            _selectStartTime(context);
+                          },
+                          child: Text(startTimeTextHour +
+                              startTimeTextMinute +
+                              startTimeTextEnd),
                         ),
                       ),
                     ],
@@ -99,8 +109,12 @@ class _AddNewActivityPageState extends State<AddNewActivityPage> {
                           style: TextStyle(fontSize: 16)),
                       Container(
                         child: ElevatedButton(
-                          onPressed: _selectEndTime,
-                          child: Text("${endTime.hour}:${endTime.minute}"),
+                          onPressed: () {
+                            _selectEndTime(context);
+                          },
+                          child: Text(endTimeTextHour +
+                              endTimeTextMinute +
+                              endTimeTextEnd),
                         ),
                       ),
                     ],
@@ -139,7 +153,7 @@ class _AddNewActivityPageState extends State<AddNewActivityPage> {
       });
   }
 
-  _selectStartTime() async {
+  _selectStartTime(BuildContext context) async {
     final TimeOfDay? newTime = await showTimePicker(
       context: context,
       initialTime: startTime,
@@ -147,11 +161,31 @@ class _AddNewActivityPageState extends State<AddNewActivityPage> {
     if (newTime != null) {
       setState(() {
         startTime = newTime;
+
+        if (startTime.hour == 0) {
+          startTimeTextHour = "12:";
+          startTimeTextEnd = " am";
+        } else if (startTime.hour == 12) {
+          startTimeTextHour = "12:";
+          startTimeTextEnd = " pm";
+        } else if (startTime.hour > 11) {
+          startTimeTextHour = "${(startTime.hour - 12)}:";
+          startTimeTextEnd = " pm";
+        } else {
+          startTimeTextHour = "${startTime.hour}:";
+          startTimeTextEnd = " am";
+        }
+
+        if (startTime.minute < 10) {
+          startTimeTextMinute = "0" + "${startTime.minute}";
+        } else {
+          startTimeTextMinute = "${startTime.minute}";
+        }
       });
     }
   }
 
-  _selectEndTime() async {
+  _selectEndTime(BuildContext context) async {
     final TimeOfDay? newTime = await showTimePicker(
       context: context,
       initialTime: endTime,
@@ -159,6 +193,25 @@ class _AddNewActivityPageState extends State<AddNewActivityPage> {
     if (newTime != null) {
       setState(() {
         endTime = newTime;
+        if (endTime.hour == 0) {
+          endTimeTextHour = "12:";
+          endTimeTextEnd = " am";
+        } else if (endTime.hour == 12) {
+          endTimeTextHour = "12:";
+          endTimeTextEnd = " pm";
+        } else if (endTime.hour > 11) {
+          endTimeTextHour = "${(endTime.hour - 12)}:";
+          endTimeTextEnd = " pm";
+        } else {
+          endTimeTextHour = "${endTime.hour}:";
+          endTimeTextEnd = " am";
+        }
+
+        if (endTime.minute < 10) {
+          endTimeTextMinute = "0" + "${endTime.minute}";
+        } else {
+          endTimeTextMinute = "${endTime.minute}";
+        }
       });
     }
   }

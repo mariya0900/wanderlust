@@ -46,7 +46,7 @@ class _AddNewTripPageState extends State<AddNewTripPage> {
                   if (currentUser != null) {
                     dbService.getUserData(uid: currentUser.uid).then((value) {
                       user = UserData.fromJson(value);
-                      print(user.uid);
+                      //print(user.uid);
                     });
                   }
 
@@ -60,7 +60,7 @@ class _AddNewTripPageState extends State<AddNewTripPage> {
                   newTrip.setDescription(_descrController.text);
                   widget.trips.add(newTrip);
 
-                  print("Title: ${newTrip.title}\n Start: ${newTrip.startDate}\n End: ${newTrip.endDate}\n Duration: ${newTrip.duration}\nYear: ${newTrip.year}\nMonth: ${newTrip.month}\nDescr: ${newTrip.description}");
+                  //print("Title: ${newTrip.title}\n Start: ${newTrip.startDate}\n End: ${newTrip.endDate}\n Duration: ${newTrip.duration}\nYear: ${newTrip.year}\nMonth: ${newTrip.month}\nDescr: ${newTrip.description}");
                   
                   
                   //dbService.addUser(user: user);

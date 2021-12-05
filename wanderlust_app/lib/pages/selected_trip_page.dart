@@ -15,7 +15,7 @@ class SelectedTripPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(_tripID);
+    //print(_tripID);
     Color? header = Colors.green[300];
     Color? options = Colors.green[100];
     return Scaffold(
@@ -73,6 +73,7 @@ class SelectedTripPage extends StatelessWidget {
                         MaterialPageRoute(
                             builder: (context) => TripItinerary(
                                   trip: _activeTrip,
+                                  tripID: _tripID,
                                   itinerary: _activeTrip.getItinerary(),
                                 )));
                   },

@@ -1,5 +1,5 @@
 import 'dart:io';
-
+import 'package:path/path.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
 class StorageService {
@@ -28,7 +28,11 @@ class StorageService {
     File file = File(filePath);
 
     try {
-      await storage.ref(uid + '/' + tripId.toString() + '/').putFile(file);
+      await storage
+          .ref(uid)
+          .child(tripId.toString())
+          .child(basename(file.path))
+          .putFile(file);
     } on FirebaseException catch (e) {
       print(e);
     }

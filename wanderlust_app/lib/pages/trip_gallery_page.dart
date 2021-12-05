@@ -51,6 +51,11 @@ class _TripGalleryState extends State<TripGallery> {
         title: const Text('Gallery'),
         centerTitle: true,
         automaticallyImplyLeading: true,
+        actions: [
+          IconButton(
+            onPressed: (){setState(() {});}, 
+            icon: Icon(Icons.refresh))
+        ],
       ),
 
       //if the gallery doesn't work we can do camera instead

@@ -101,7 +101,7 @@ class _TripItineraryState extends State<TripItinerary> {
               context,
               MaterialPageRoute(
                   builder: (context) =>
-                      AddNewActivityPage(itinerary: widget.itinerary)));
+                      AddNewActivityPage(itinerary: widget.itinerary )));
           if (result == true) {
             setState(() {});
           }

@@ -2,6 +2,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:intl/intl.dart';
+import 'package:latlong2/latlong.dart';
 import 'location.dart';
 import 'activity.dart';
 import 'package:camera/camera.dart';
@@ -69,6 +70,7 @@ class Trip {
   List<Activity> getItinerary() {
     return itinerary;
   }
+  
 
   void setGallery(List<String> gal) {
     gallery = gal;

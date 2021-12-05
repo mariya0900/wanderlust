@@ -11,7 +11,8 @@ class SelectedTripPage extends StatelessWidget {
   final Trip _activeTrip;
   final int _tripID;
 
-  SelectedTripPage(this._activeTrip, this._tripID, {Key? key}) : super(key: key);
+  SelectedTripPage(this._activeTrip, this._tripID, {Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -100,13 +101,8 @@ class SelectedTripPage extends StatelessWidget {
                   onTap: () async {
                     cameras = await availableCameras();
                     _activeTrip.setCamera(cameras);
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => TripGallery(
-                                trip: _activeTrip,
-                                gallery: _activeTrip.getGallery(),
-                                cameras: _activeTrip.getCamera())));
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => TripGallery()));
                   },
                 ),
                 GestureDetector(

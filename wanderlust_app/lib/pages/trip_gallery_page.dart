@@ -13,48 +13,42 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:wanderlust_app/services/database_service.dart';
 import 'package:wanderlust_app/services/storage_service.dart';
 
-var currentUser = FirebaseAuth.instance.currentUser;
-UserData user = UserData(uid: "", trips: []);
-DatabaseService dbService = DatabaseService();
-StorageService ssService = StorageService();
-
 class TripGallery extends StatefulWidget {
-  final Trip trip;
-  List<String> gallery = [];
-  List<CameraDescription> cameras = [];
-  TripGallery(
-      {Key? key,
-      required this.trip,
-      required this.gallery,
-      required this.cameras})
-      : super(key: key);
+  TripGallery({
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<TripGallery> createState() => _TripGalleryState();
 }
 
 class _TripGalleryState extends State<TripGallery> {
+  DatabaseService dbService = DatabaseService();
+  StorageService ssService = StorageService();
+
   int selectedIndex = 0;
+  var currentUser = FirebaseAuth.instance.currentUser;
+
+  // Need to pass this
+  int tripId = 0;
+
+  List<String> gallery = [];
+  List<CameraDescription> cameras = [];
 
   @override
   Widget build(BuildContext context) {
     if (currentUser != null) {
-      print("HELP OH GsssOD");
       dbService.getUserData(uid: currentUser!.uid).then((value) {
-        user = UserData.fromJson(value);
+        UserData user = UserData.fromJson(value);
+        ssService
+            .getImageIds(uid: currentUser!.uid, tripId: tripId)
+            .then((pathList) => gallery = pathList!);
         //print(user.trips[0].title);
       });
     }
-    int currentTrip = 0;
-    for (int i = 0; i < user.trips.length; i++) {
-      if (user.trips[i].title == widget.trip.title) {
-        currentTrip = i;
-        print("Epic: " + widget.trip.title + " $currentTrip");
-      }
-    }
     return Scaffold(
       appBar: AppBar(
-        title: Text('Gallery'),
+        title: const Text('Gallery'),
         centerTitle: true,
         automaticallyImplyLeading: true,
       ),
@@ -62,13 +56,10 @@ class _TripGalleryState extends State<TripGallery> {
       //if the gallery doesn't work we can do camera instead
       body: //Center(child: Text('change to a grid view')),
           GridView.builder(
-              itemCount: widget.gallery.length,
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              itemCount: gallery.length,
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 4, mainAxisSpacing: 1),
               itemBuilder: (BuildContext context, index) {
-                ssService.getImageIds(uid: user.uid, tripId: currentTrip);
-                ssService.getUrl(fullPath: ssService.imageID[index]);
-                print("Yoooo: " + ssService.url);
                 return Container(
                   padding: const EdgeInsets.all(10),
                   decoration: BoxDecoration(
@@ -76,11 +67,16 @@ class _TripGalleryState extends State<TripGallery> {
                           ? (Colors.blue)
                           : (Colors.transparent)),
                   child: GestureDetector(
-                    child: Image.network(
-                      ssService.url,
-                      fit: BoxFit.cover,
+                    child: FutureBuilder(
+                      future: ssService.getUrl(fullPath: gallery[index]),
+                      builder: (context, snapshot) {
+                        if (snapshot.hasData) {
+                          return Image.network(snapshot.data.toString());
+                        } else {
+                          return CircularProgressIndicator();
+                        }
+                      },
                     ),
-                    key: Key(ssService.url),
                     onTap: () {
                       print("Word");
                     },
@@ -89,13 +85,7 @@ class _TripGalleryState extends State<TripGallery> {
               }),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
-          var result = await Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => AddNewImage(
-                      trip: widget.trip,
-                      gallery: user.trips[currentTrip].gallery,
-                      cameras: widget.cameras)));
+          var result = await Navigator.pushNamed(context, '/open_camera');
           if (result == true) {
             setState(() {});
           }

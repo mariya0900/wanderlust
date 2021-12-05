@@ -1,5 +1,7 @@
+import 'package:camera/camera.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:wanderlust_app/pages/add_new_image.dart';
 import 'package:wanderlust_app/pages/auth/create_account_page.dart';
 import 'package:wanderlust_app/pages/auth/password_reset_page.dart';
 import 'classes/trip.dart';
@@ -16,16 +18,22 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:timezone/data/latest.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 
-void main() async {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  final cameras = await availableCameras();
+  final firstCamera = cameras.first;
+
   await Firebase.initializeApp();
-  runApp(const MyApp());
+  runApp(MyApp(
+    camera: firstCamera,
+  ));
   tz.initializeTimeZones();
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  const MyApp({Key? key, required this.camera}) : super(key: key);
 
+  final camera;
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -41,6 +49,7 @@ class MyApp extends StatelessWidget {
         //'/open_gallery': (context) => TripGallery(),
         //'/open_itinerary': (context) => TripItinerary(trip: _activeTrip,),
         '/set_reminder': (context) => TripSetReminder(),
+        '/open_camera': (context) => AddNewImage(camera: camera)
 
         //'/new_trip': (context) => AddNewTripPage(),
         //'/view_trip': (context) => SelectedTripPage(),

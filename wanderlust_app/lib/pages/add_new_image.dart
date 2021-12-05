@@ -9,6 +9,7 @@ import 'package:wanderlust_app/classes/trip.dart';
 import 'package:wanderlust_app/classes/userdata.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:wanderlust_app/services/camera_service.dart';
 import 'package:wanderlust_app/services/database_service.dart';
 import 'package:wanderlust_app/services/storage_service.dart';
 
@@ -18,16 +19,13 @@ DatabaseService dbService = DatabaseService();
 StorageService ssService = StorageService();
 
 class AddNewImage extends StatefulWidget {
-  final Trip trip;
+  final camera;
   late List<String> gallery;
-  List<CameraDescription> cameras = [];
 
-  AddNewImage(
-      {Key? key,
-      required this.trip,
-      required this.gallery,
-      required this.cameras})
-      : super(key: key);
+  AddNewImage({
+    Key? key,
+    required this.camera,
+  }) : super(key: key);
 
   @override
   State<AddNewImage> createState() => _AddNewImageState();
@@ -35,14 +33,19 @@ class AddNewImage extends StatefulWidget {
 
 class _AddNewImageState extends State<AddNewImage> {
   late CameraController _controller;
-  late Future<void> _initializeController;
+  late Future<void> _initializeControllerFuture;
 
   @override
   void initState() {
     super.initState();
-    _controller =
-        CameraController(widget.cameras.first, ResolutionPreset.medium);
-    _initializeController = _controller.initialize();
+
+    _controller = CameraController(widget.camera, ResolutionPreset.medium);
+    _initializeControllerFuture = _controller.initialize();
+  }
+
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
   }
 
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -58,7 +61,7 @@ class _AddNewImageState extends State<AddNewImage> {
     return Scaffold(
       appBar: AppBar(title: Text("Take Picture")),
       body: FutureBuilder(
-        future: _initializeController,
+        future: _initializeControllerFuture,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
             return CameraPreview(_controller);
@@ -73,13 +76,11 @@ class _AddNewImageState extends State<AddNewImage> {
           print(image.path);
           //widget.gallery.add(image.path);
           for (int i = 0; i < user.trips.length; i++) {
-            if (user.trips[i].title == widget.trip.title) {
-              print(image.path);
-              print(user.trips.length);
-              print(i);
-              ssService.uploadImage(
-                  filePath: image.path, uid: user.uid, tripId: i);
-            }
+            print(image.path);
+            print(user.trips.length);
+            print(i);
+            ssService.uploadImage(
+                filePath: image.path, uid: user.uid, tripId: 0);
           }
           Navigator.pop(context, true);
         },

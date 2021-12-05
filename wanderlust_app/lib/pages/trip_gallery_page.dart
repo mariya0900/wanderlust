@@ -12,6 +12,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:wanderlust_app/services/database_service.dart';
 import 'package:wanderlust_app/services/storage_service.dart';
+import 'package:wanderlust_app/globals.dart' as globals;
 
 class TripGallery extends StatefulWidget {
   TripGallery({
@@ -30,7 +31,6 @@ class _TripGalleryState extends State<TripGallery> {
   var currentUser = FirebaseAuth.instance.currentUser;
 
   // Need to pass this
-  int tripId = 0;
 
   List<String> gallery = [];
   List<CameraDescription> cameras = [];
@@ -41,7 +41,7 @@ class _TripGalleryState extends State<TripGallery> {
       dbService.getUserData(uid: currentUser!.uid).then((value) {
         UserData user = UserData.fromJson(value);
         ssService
-            .getImageIds(uid: currentUser!.uid, tripId: tripId)
+            .getImageIds(uid: currentUser!.uid, tripId: globals.selectedTripId)
             .then((pathList) => gallery = pathList!);
         //print(user.trips[0].title);
       });

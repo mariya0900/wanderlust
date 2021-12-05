@@ -12,6 +12,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:wanderlust_app/services/camera_service.dart';
 import 'package:wanderlust_app/services/database_service.dart';
 import 'package:wanderlust_app/services/storage_service.dart';
+import 'package:wanderlust_app/globals.dart' as globals;
 
 var currentUser = FirebaseAuth.instance.currentUser;
 UserData user = UserData(uid: "2", trips: []);
@@ -80,7 +81,9 @@ class _AddNewImageState extends State<AddNewImage> {
             print(user.trips.length);
             print(i);
             ssService.uploadImage(
-                filePath: image.path, uid: user.uid, tripId: 0);
+                filePath: image.path,
+                uid: user.uid,
+                tripId: globals.selectedTripId);
           }
           Navigator.pop(context, true);
         },

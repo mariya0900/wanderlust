@@ -18,20 +18,24 @@ class HomepageMyTrips extends StatefulWidget {
 
 class _HomepageMyTripsState extends State<HomepageMyTrips> {
   DatabaseService dbService = DatabaseService();
-
+  UserData user = UserData(uid: '', trips: []);
+  var currentUser = FirebaseAuth.instance.currentUser;
   List<Trip> trips = [];
 
   @override
+    void initState() {
+      super.initState();
+      if (currentUser != null) {
+        dbService.getUserData(uid: currentUser!.uid).then((value) {
+          user = UserData.fromJson(value);
+          trips = user.trips;
+        });
+      }
+    }
+
+  @override
   Widget build(BuildContext context) {
-    // more UI testing
-    var currentUser = FirebaseAuth.instance.currentUser;
-    UserData user = UserData(uid: '', trips: []);
-    if (currentUser != null) {
-      dbService.getUserData(uid: currentUser.uid).then((value) {
-        user = UserData.fromJson(value);
-        trips = user.trips;
-      });
-    } 
+    // more UI testing 
 
     return Scaffold(
       appBar: AppBar(

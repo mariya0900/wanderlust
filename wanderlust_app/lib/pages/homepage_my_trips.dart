@@ -41,12 +41,17 @@ class _HomepageMyTripsState extends State<HomepageMyTrips> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("My Trips"),
+        actions: [
+          IconButton(
+            onPressed: (){setState(() {});}, 
+            icon: Icon(Icons.refresh))
+        ],
         automaticallyImplyLeading: false,
       ),
       body: StreamBuilder(
           stream: dbService.getUserTripSnapshot(uid: currentUser!.uid),
           builder: (BuildContext context, AsyncSnapshot snapshot) {
-            if (user.trips.isEmpty) return Text("\n   No Data");
+            if (user.trips.isEmpty) return Text("\n   Load Data or Add Trip");
             return ListView.separated(
                 separatorBuilder: (BuildContext context, int index) =>
                     const Divider(),

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:wanderlust_app/pages/add_new_image.dart';
 import 'package:wanderlust_app/pages/auth/create_account_page.dart';
 import 'package:wanderlust_app/pages/auth/password_reset_page.dart';
+import 'package:wanderlust_app/pages/auth/verify_email_page.dart';
 import 'classes/trip.dart';
 import 'custom_theme.dart';
 import 'pages/auth/login_page.dart';
@@ -43,7 +44,8 @@ class MyApp extends StatelessWidget {
       home: MyLoginPage(),
       routes: {
         '/create_account': (context) => CreateAccountPage(),
-        '/login_successful': (context) => HomepageMyTrips(),
+        '/login_successful': (context) => VerifyEmailPage(),
+        '/account_verified': (context) => HomepageMyTrips(),
         '/reset_password': (context) => PasswordResetPage(),
         '/open_map': (context) => TripDestinationMap(),
         //'/open_gallery': (context) => TripGallery(),

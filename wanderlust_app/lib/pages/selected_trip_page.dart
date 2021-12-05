@@ -9,24 +9,13 @@ List<CameraDescription> cameras = [];
 
 class SelectedTripPage extends StatelessWidget {
   final Trip _activeTrip;
-  final List<String> _months = [
-    'January',
-    'February',
-    'March',
-    'April',
-    'May',
-    'June',
-    'July',
-    'August',
-    'September',
-    'October',
-    'November',
-    'December'
-  ];
-  SelectedTripPage(this._activeTrip, {Key? key}) : super(key: key);
+  final int _tripID;
+
+  SelectedTripPage(this._activeTrip, this._tripID, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    print(_tripID);
     Color? header = Colors.green[300];
     Color? options = Colors.green[100];
     return Scaffold(
@@ -61,7 +50,7 @@ class SelectedTripPage extends StatelessWidget {
                                 text: ' ~ ${_activeTrip.duration}',
                                 style: TextStyle(fontSize: 16)),
                             TextSpan(
-                                text: '\n${_activeTrip.description}',
+                                text: '\n\n${_activeTrip.description}',
                                 style: TextStyle(fontSize: 12)),
                           ],
                         ),

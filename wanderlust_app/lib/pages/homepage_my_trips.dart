@@ -37,13 +37,11 @@ class _HomepageMyTripsState extends State<HomepageMyTrips> {
       dbService.getUserData(uid: currentUser.uid).then((value) {
         user = UserData.fromJson(value);
         trips = user.trips;
-        //print(trips[0].title);
-        //print(user.trips.length);
       });
     } 
     
     //print(user.trips[0].title);
-    //print(trips.length); 
+    //print(user.trips.length); 
 
     return Scaffold(
       appBar: AppBar(
@@ -51,36 +49,52 @@ class _HomepageMyTripsState extends State<HomepageMyTrips> {
         automaticallyImplyLeading: false,
       ),
 
-      // replace with StreamBuilderWidget if trip data on cloud
-      body: ListView.separated(
-          separatorBuilder: (BuildContext context, int index) =>
-              const Divider(),
-          itemCount: trips.length,
-          itemBuilder: (BuildContext context, int index) {
-            return Container(
-              padding: const EdgeInsets.all(10.0),
-              child: ListTile(
-                title: Text(
-                  trips[index].title,
-                  style: const TextStyle(fontSize: 16),
+      body: StreamBuilder(
+        stream: dbService.getUserTripSnapshot(uid: currentUser!.uid),
+        builder: (BuildContext context, AsyncSnapshot snapshot){
+          if (!snapshot.hasData) return Text("No Data");
+          return ListView.separated(
+            separatorBuilder: (BuildContext context, int index) => const Divider(),
+            itemCount: (snapshot.data.docs[0])['trips'].length,
+            itemBuilder: (BuildContext context, int index){
+              final docData = (snapshot.data.docs[0])['trips'];
+              //print(docData[index]['month']);
+
+              return Container(
+                padding: const EdgeInsets.all(10.0),
+                child: ListTile(
+                  title: Text(
+                    docData[index]['title'],
+                    style: const TextStyle(fontSize: 16),
+                  ),
+                  subtitle: Text(
+                    docData[index]['description'],
+                    style: const TextStyle(fontSize: 12),
+                  ),
+                  onTap: () {
+                    //print(index);
+                    // Navigator.pushNamed(context, '/view_trip');
+                    Trip _activeTrip = trips[index];
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => SelectedTripPage(_activeTrip, index)));
+                    setState(() {
+                      if (currentUser != null) {
+                        dbService.getUserData(uid: currentUser.uid).then((value) {
+                          user = UserData.fromJson(value);
+                          trips = user.trips;
+                          //print("Title: ${_activeTrip.title}\n Start: ${_activeTrip.startDate}\n End: ${_activeTrip.endDate}\n Duration: ${_activeTrip.duration}\nYear: ${_activeTrip.year}\nMonth: ${_activeTrip.month}\nDescr: ${_activeTrip.description}");
+                        });
+                      }
+                    });
+                  },
                 ),
-                subtitle: Text(
-                  "${trips[index].description}",
-                  style: const TextStyle(fontSize: 12),
-                ),
-                onTap: () {
-                  
-                  // Navigator.pushNamed(context, '/view_trip');
-                  Trip _activeTrip = trips[index];
-                  print(_activeTrip.year);
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => SelectedTripPage(_activeTrip, index)));
-                },
-              ),
-            );
-          }), 
+              );
+            }
+         );
+       }
+     ),
 
       floatingActionButton: FloatingActionButton(
         onPressed: () async {

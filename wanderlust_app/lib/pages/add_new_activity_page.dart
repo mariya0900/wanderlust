@@ -54,90 +54,93 @@ class _AddNewActivityPageState extends State<AddNewActivityPage> {
             tooltip: "Save",
           ),
         ]),
-        body: Form(
-          key: _formKey,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Container(
-                child: TextField(
-                  controller: nameController,
-                  decoration: InputDecoration(labelText: "Activity name"),
+        body:SingleChildScrollView(
+          child: Form(
+            key: _formKey,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Container(
+                  child: TextField(
+                    controller: nameController,
+                    decoration: InputDecoration(labelText: "Activity name"),
+                  ),
+                  padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
                 ),
-                padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
-              ),
-              Container(
-                  child: Row(
-                    children: [
-                      Text("Date:                          ",
-                          style: TextStyle(fontSize: 16)),
-                      Container(
-                        child: ElevatedButton(
+                Container(
+                    child: Row(
+                      children: [
+                        Text("Date:                          ",
+                            style: TextStyle(fontSize: 16)),
+                        Container(
+                          child: ElevatedButton(
+                              onPressed: () {
+                                _selectDate(context);
+                              },
+                              child:
+                                  Text("${date.day}/${date.month}/${date.year}")),
+                        ),
+                      ],
+                    ),
+                    padding:
+                        EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0)),
+                Container(
+                    child: Row(
+                      children: [
+                        Text("Start Time:                     ",
+                            style: TextStyle(fontSize: 16)),
+                        Container(
+                          child: ElevatedButton(
                             onPressed: () {
-                              _selectDate(context);
+                              _selectStartTime(context);
                             },
-                            child:
-                                Text("${date.day}/${date.month}/${date.year}")),
-                      ),
-                    ],
-                  ),
-                  padding:
-                      EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0)),
-              Container(
-                  child: Row(
-                    children: [
-                      Text("Start Time:                     ",
-                          style: TextStyle(fontSize: 16)),
-                      Container(
-                        child: ElevatedButton(
-                          onPressed: () {
-                            _selectStartTime(context);
-                          },
-                          child: Text(startTimeTextHour +
-                              startTimeTextMinute +
-                              startTimeTextEnd),
+                            child: Text(startTimeTextHour +
+                                startTimeTextMinute +
+                                startTimeTextEnd),
+                          ),
                         ),
-                      ),
-                    ],
-                  ),
-                  padding:
-                      EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0)),
-              Container(
-                  child: Row(
-                    children: [
-                      Text(" End Time:                      ",
-                          style: TextStyle(fontSize: 16)),
-                      Container(
-                        child: ElevatedButton(
-                          onPressed: () {
-                            _selectEndTime(context);
-                          },
-                          child: Text(endTimeTextHour +
-                              endTimeTextMinute +
-                              endTimeTextEnd),
+                      ],
+                    ),
+                    padding:
+                        EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0)),
+                Container(
+                    child: Row(
+                      children: [
+                        Text(" End Time:                      ",
+                            style: TextStyle(fontSize: 16)),
+                        Container(
+                          child: ElevatedButton(
+                            onPressed: () {
+                              _selectEndTime(context);
+                            },
+                            child: Text(endTimeTextHour +
+                                endTimeTextMinute +
+                                endTimeTextEnd),
+                          ),
                         ),
-                      ),
-                    ],
-                  ),
-                  padding:
-                      EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0)),
-              Container(
-                  child: TextField(
-                    controller: locationController,
-                    decoration: InputDecoration(labelText: "Location"),
-                  ),
-                  padding:
-                      EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0)),
-              Container(
-                  child: TextField(
-                    controller: additionalController,
-                    decoration: InputDecoration(labelText: "Additional info"),
-                  ),
-                  padding:
-                      EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0)),
-            ],
-          ),
-        ));
+                      ],
+                    ),
+                    padding:
+                        EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0)),
+                Container(
+                    child: TextField(
+                      controller: locationController,
+                      decoration: InputDecoration(labelText: "Location"),
+                    ),
+                    padding:
+                        EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0)),
+                Container(
+                    child: TextField(
+                      controller: additionalController,
+                      decoration: InputDecoration(labelText: "Additional info"),
+                    ),
+                    padding:
+                        EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0)),
+              ],
+            ),
+          )
+        )
+      );
   }
 
   _selectDate(BuildContext context) async {

@@ -6,9 +6,10 @@ import 'package:wanderlust_app/pages/add_new_activity_page.dart';
 
 class TripItinerary extends StatefulWidget {
   final Trip trip;
+  final int tripID;
   List<Activity> itinerary = [];
 
-  TripItinerary({Key? key, required this.trip, required this.itinerary})
+  TripItinerary({Key? key, required this.trip, required this.tripID, required this.itinerary})
       : super(key: key);
 
   @override
@@ -82,11 +83,11 @@ class _TripItineraryState extends State<TripItinerary> {
                                   "${widget.itinerary[index].date.day}/${widget.itinerary[index].date.month}/${widget.itinerary[index].date.year}"),
                               Text(
                                 "${widget.itinerary[index].startTime.hour}:${widget.itinerary[index].startTime.minute} - ${widget.itinerary[index].endTime.hour}:${widget.itinerary[index].endTime.minute}",
-                                style: const TextStyle(color: Colors.grey),
+                                style: const TextStyle(color: Colors.white),
                               )
                             ]),
                         onTap: () async {
-                          print(selectedIndex);
+                          //print(selectedIndex);
                           selectedIndex = index;
                           setState(() {});
                         },

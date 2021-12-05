@@ -87,4 +87,10 @@ class DatabaseService {
     DocumentSnapshot snapshot = await userData.doc(uid).get();
     return snapshot.data();
   }
+
+  Stream<QuerySnapshot>getUserTripSnapshot({required String uid}) {
+    //DocumentSnapshot snapshot = await userData.doc(uid).get();
+    //return snapshot.data();
+    return userData.where('uid', isEqualTo: uid).snapshots();
+  }
 }

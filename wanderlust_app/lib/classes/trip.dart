@@ -59,6 +59,7 @@ class Trip {
 
   //Trip(this._year, this._duration, this._location, [this.month, this.description]);
 
+  Trip.empty();
   Trip(this.title, this.year, this.duration, this.month, this.description);
 
   void setItinerary(List<Activity> it) {

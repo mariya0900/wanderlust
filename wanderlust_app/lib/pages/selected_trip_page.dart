@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:wanderlust_app/globals.dart';
 import 'package:wanderlust_app/pages/trip_gallery_page.dart';
 import 'package:wanderlust_app/pages/trip_itinerary_page.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import '/services/database_service.dart';
 import '/classes/trip.dart';
 import 'package:camera/camera.dart';
+import '/classes/userdata.dart';
 
 // The _activeTrip may have to get passed to each of navigator pushes below
 List<CameraDescription> cameras = [];
@@ -21,9 +25,29 @@ class SelectedTripPage extends StatelessWidget {
     Color? options = Colors.green[100];
     return Scaffold(
       appBar: AppBar(
+        actions: [
+          IconButton(
+              icon: const Icon(Icons.delete),
+              onPressed: () async {
+                DatabaseService dbService = DatabaseService();
+                var currentUser = FirebaseAuth.instance.currentUser;
+
+                if (currentUser != null) {
+                  dbService.getUserData(uid: currentUser.uid).then((value) {
+                    UserData user = UserData.fromJson(value);
+                    user.trips.removeAt(selectedTripId);
+                    UserData testuser = UserData(uid: currentUser.uid, trips: user.trips);
+                    dbService.addUser(user: testuser);
+                  });
+                }
+                Navigator.pop(context, true);
+            }
+          ),
+        ],
+
         automaticallyImplyLeading: true,
       ),
-      
+
       body: Column(
         //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [

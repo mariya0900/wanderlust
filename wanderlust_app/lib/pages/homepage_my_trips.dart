@@ -17,16 +17,9 @@ class HomepageMyTrips extends StatefulWidget {
 }
 
 class _HomepageMyTripsState extends State<HomepageMyTrips> {
-  // use a CollectionReference to a trips database
   DatabaseService dbService = DatabaseService();
 
-  // for UI testing purposes
-  //Trip test1 = Trip('Test Trip One', 2022, Duration(days: 7), 10, 'just a test 1');
-
-  Trip test1 = Trip('Test Trip One', '2022', 'One Week', '10', 'just a test 1');
-  Trip test2 = Trip('Test Trip Two', '2022', 'Three Days', '5', 'just a test 2');
   List<Trip> trips = [];
-  
 
   @override
   Widget build(BuildContext context) {
@@ -39,9 +32,6 @@ class _HomepageMyTripsState extends State<HomepageMyTrips> {
         trips = user.trips;
       });
     } 
-    
-    //print(user.trips[0].title);
-    //print(user.trips.length); 
 
     return Scaffold(
       appBar: AppBar(
@@ -52,13 +42,12 @@ class _HomepageMyTripsState extends State<HomepageMyTrips> {
       body: StreamBuilder(
         stream: dbService.getUserTripSnapshot(uid: currentUser!.uid),
         builder: (BuildContext context, AsyncSnapshot snapshot){
-          if (!snapshot.hasData) return Text("No Data");
+          if (user.trips.isEmpty) return Text("\n   No Data");
           return ListView.separated(
             separatorBuilder: (BuildContext context, int index) => const Divider(),
             itemCount: (snapshot.data.docs[0])['trips'].length,
             itemBuilder: (BuildContext context, int index){
               final docData = (snapshot.data.docs[0])['trips'];
-              //print(docData[index]['month']);
 
               return Container(
                 padding: const EdgeInsets.all(10.0),
@@ -79,15 +68,7 @@ class _HomepageMyTripsState extends State<HomepageMyTrips> {
                         context,
                         MaterialPageRoute(
                             builder: (context) => SelectedTripPage(_activeTrip, index)));
-                    setState(() {
-                      if (currentUser != null) {
-                        dbService.getUserData(uid: currentUser.uid).then((value) {
-                          user = UserData.fromJson(value);
-                          trips = user.trips;
-                          //print("Title: ${_activeTrip.title}\n Start: ${_activeTrip.startDate}\n End: ${_activeTrip.endDate}\n Duration: ${_activeTrip.duration}\nYear: ${_activeTrip.year}\nMonth: ${_activeTrip.month}\nDescr: ${_activeTrip.description}");
-                        });
-                      }
-                    });
+                    
                   },
                 ),
               );

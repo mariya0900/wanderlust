@@ -160,7 +160,7 @@ class _FormWidgetState extends State<FormWidget> {
                         child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
-                              Text('- - - - - - - - - - - - - - -',
+                              Text('- - - - - - - - - - - - -',
                                   style: TextStyle(
                                     fontWeight: FontWeight.w900,
                                     color: CustomTheme
@@ -171,7 +171,7 @@ class _FormWidgetState extends State<FormWidget> {
                                       fontWeight: FontWeight.w300,
                                       color: Colors.black)),
                               Text(
-                                '- - - - - - - - - - - - - - -',
+                                '- - - - - - - - - - - - -',
                                 style: TextStyle(
                                     fontWeight: FontWeight.w900,
                                     color: CustomTheme

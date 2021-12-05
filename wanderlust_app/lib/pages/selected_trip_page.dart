@@ -22,8 +22,8 @@ class SelectedTripPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: true,
-        // if this causes a problem, we can use a back icon and pop context instead
       ),
+      
       body: Column(
         //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
@@ -33,7 +33,7 @@ class SelectedTripPage extends StatelessWidget {
                   //fit: FlexFit.tight,
                   flex: 3,
                   child: Container(
-                      height: 150,
+                      height: 175,
                       padding: const EdgeInsets.all(20.0),
                       color: Colors.green[200],
                       child: Text.rich(
@@ -41,15 +41,16 @@ class SelectedTripPage extends StatelessWidget {
                           //text: 'Hello', // default text style
                           children: <TextSpan>[
                             TextSpan(
+                                text: '${_activeTrip.month} - ${_activeTrip.year}\n',
+                                style: TextStyle(fontSize: 12, letterSpacing: 2)),
+                            TextSpan(
                                 text: '${_activeTrip.title}\n',
                                 style: TextStyle(
                                     fontSize: 28, fontWeight: FontWeight.bold)),
+                            
                             TextSpan(
-                                text: _activeTrip.month,
-                                style: TextStyle(fontSize: 16)),
-                            TextSpan(
-                                text: ' ~ ${_activeTrip.duration}',
-                                style: TextStyle(fontSize: 16)),
+                                text: '${_activeTrip.duration}',
+                                style: TextStyle(fontSize: 14)),
                             TextSpan(
                                 text: '\n\n${_activeTrip.description}',
                                 style: TextStyle(fontSize: 12)),

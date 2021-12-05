@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:wanderlust_app/pages/auth/create_account_page.dart';
 import 'package:wanderlust_app/pages/auth/password_reset_page.dart';
 import 'classes/trip.dart';
+import 'custom_theme.dart';
 import 'pages/auth/login_page.dart';
 import 'pages/homepage_my_trips.dart';
 import 'pages/add_new_trip_page.dart';
@@ -30,9 +31,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Wanderlust App',
-      theme: ThemeData(
-        primarySwatch: Colors.green,
-      ),
+      theme: CustomTheme.lightTheme,
       home: MyLoginPage(),
       routes: {
         '/create_account': (context) => CreateAccountPage(),

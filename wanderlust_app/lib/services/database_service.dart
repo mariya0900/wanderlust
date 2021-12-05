@@ -9,7 +9,7 @@ class DatabaseService {
   CollectionReference trips = FirebaseFirestore.instance.collection('trips');
   CollectionReference userData =
       FirebaseFirestore.instance.collection('userData');
-
+/**
   void addTrip(
       {required String uid,
       required String title,
@@ -59,6 +59,8 @@ class DatabaseService {
         .catchError((error) => print("Failed to add activity: $error"));
   }
 
+  
+
   Future<List<Trip>?> getTrips({required String uid}) async {
     QuerySnapshot snapshot =
         await firestore.collection('trips').where('uid', isEqualTo: uid).get();
@@ -69,6 +71,8 @@ class DatabaseService {
     }
     return trips;
   }
+
+  **/
 
   void addUser({required UserData user}) {
     print(user.toJson());

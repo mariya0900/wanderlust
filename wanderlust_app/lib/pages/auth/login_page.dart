@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:wanderlust_app/custom_theme.dart';
 import 'package:wanderlust_app/services/auth_service.dart';
 import 'package:wanderlust_app/services/database_service.dart';
 
@@ -34,15 +35,7 @@ class _FormWidgetState extends State<FormWidget> {
         SliverFillRemaining(
           hasScrollBody: false,
           child: Container(
-              decoration: const BoxDecoration(
-                  gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: [
-                  Color(0xFFFFFFFF),
-                  Color(0xFFFFFFFF),
-                ],
-              )),
+              color: CustomTheme.lightTheme.backgroundColor,
               padding: const EdgeInsets.only(
                   top: 15, left: 30, right: 30.0, bottom: 30),
               child: Form(
@@ -127,7 +120,8 @@ class _FormWidgetState extends State<FormWidget> {
                           width: double.infinity,
                           child: ElevatedButton(
                               style: ElevatedButton.styleFrom(
-                                  primary: Color(0xff262c24),
+                                  primary: CustomTheme
+                                      .lightTheme.colorScheme.secondary,
                                   padding: EdgeInsets.all(20),
                                   shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(35))),
@@ -165,14 +159,14 @@ class _FormWidgetState extends State<FormWidget> {
                         padding: const EdgeInsets.only(top: 25),
                         child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: const [
-                              Text(
-                                '- - - - - - - - - - - - - - -',
-                                style: TextStyle(
+                            children: [
+                              Text('- - - - - - - - - - - - - - -',
+                                  style: TextStyle(
                                     fontWeight: FontWeight.w900,
-                                    color: Color(0xff6cbe77)),
-                              ),
-                              Text('Or',
+                                    color: CustomTheme
+                                        .lightTheme.colorScheme.primary,
+                                  )),
+                              const Text('Or',
                                   style: TextStyle(
                                       fontWeight: FontWeight.w300,
                                       color: Colors.black)),
@@ -180,7 +174,8 @@ class _FormWidgetState extends State<FormWidget> {
                                 '- - - - - - - - - - - - - - -',
                                 style: TextStyle(
                                     fontWeight: FontWeight.w900,
-                                    color: Color(0xff6cbe77)),
+                                    color: CustomTheme
+                                        .lightTheme.colorScheme.primary),
                               ),
                             ]),
                       ),
@@ -190,7 +185,8 @@ class _FormWidgetState extends State<FormWidget> {
                           width: double.infinity,
                           child: ElevatedButton(
                               style: ElevatedButton.styleFrom(
-                                  primary: const Color(0xff6cbe77),
+                                  primary: CustomTheme
+                                      .lightTheme.colorScheme.primary,
                                   padding: const EdgeInsets.all(20),
                                   shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(35))),

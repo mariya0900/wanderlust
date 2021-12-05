@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wanderlust_app/custom_theme.dart';
 import 'package:wanderlust_app/services/auth_service.dart';
 
 // ref lab 7, exercise 6
@@ -32,21 +33,13 @@ class _FormWidgetState extends State<FormWidget> {
           SliverFillRemaining(
             hasScrollBody: false,
             child: Container(
-                decoration: const BoxDecoration(
-                    gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [
-                    Color(0xFFFFFFFF),
-                    Color(0xFFFFFFFF),
-                  ],
-                )),
+                color: CustomTheme.lightTheme.backgroundColor,
                 padding: const EdgeInsets.only(
                     top: 15, left: 30, right: 30.0, bottom: 30),
                 child: Form(
                   key: _formKey,
                   child: Column(
-                      mainAxisAlignment: MainAxisAlignment.end,
+                      mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         const Padding(

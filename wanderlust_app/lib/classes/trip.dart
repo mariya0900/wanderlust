@@ -89,10 +89,11 @@ class Trip {
 
   // Maps Json to Trip Object
   factory Trip.fromJson(Map<String, dynamic> json) {
-    Trip trip = Trip(json['title'], json['startDate'], json['endDate'],
-        json['duration'], json['month']);
+    Trip trip = Trip(json['title'], json['year'], json['duration'],
+        json['month'], json['description']);
 
-    trip.description = json['description'];
+    trip.startDate = json['startDate'];
+    trip.endDate = json['endDate'];
 
     List<Activity> activityList = json['itinerary'].map<Activity>((activity) {
       return Activity.fromJson(activity);
@@ -116,7 +117,8 @@ class Trip {
       'duration': duration.toString(),
       'month': month.toString(),
       'description': description,
-      'itinerary': convertedActivities
+      'itinerary': convertedActivities,
+      'year': year.toString()
     };
   }
 }

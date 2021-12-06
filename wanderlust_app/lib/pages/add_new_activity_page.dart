@@ -1,7 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:wanderlust_app/classes/activity.dart';
+import 'package:wanderlust_app/classes/location.dart';
+import 'package:wanderlust_app/pages/trip_destination_map_page.dart';
 import 'package:wanderlust_app/pages/trip_itinerary_page.dart';
+
+import 'package:geolocator/geolocator.dart';
+import 'package:geocoding/geocoding.dart';
+import 'package:latlong2/latlong.dart';
 
 class AddNewActivityPage extends StatefulWidget {
   late List<Activity> itinerary;
@@ -18,7 +24,8 @@ class _AddNewActivityPageState extends State<AddNewActivityPage> {
   final locationController = TextEditingController();
   final additionalController = TextEditingController();
   String name = '';
-  String location = '';
+  String location='';
+  
   String additionalInfo = '';
   DateTime date = DateTime.now();
   TimeOfDay startTime = TimeOfDay(hour: 0, minute: 00);
@@ -31,7 +38,6 @@ class _AddNewActivityPageState extends State<AddNewActivityPage> {
   String endTimeTextHour = "12:";
   String endTimeTextMinute = "00";
   String endTimeTextEnd = " am";
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,11 +47,18 @@ class _AddNewActivityPageState extends State<AddNewActivityPage> {
               if (_formKey.currentState!.validate()) {
                 setState(() {
                   name = nameController.text;
-                  location = locationController.text;
+                  location=locationController.text;
                   additionalInfo = additionalController.text;
                   Activity newActivity = Activity(
                       name, date, startTime, endTime, location, additionalInfo);
+                  newActivity.setLocation(location);
                   widget.itinerary.add(newActivity);
+
+                  /*Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            TripDestinationMap(itinerary: widget.itinerary)));*/
                 });
                 Navigator.pop(context, true);
               }

@@ -64,7 +64,7 @@ class _TripItineraryState extends State<TripItinerary> {
                           children: [
                             Container(
                               padding: EdgeInsets.symmetric(vertical: 5.0),
-                              child: Text(widget.itinerary[index].location,
+                              child: Text(widget.itinerary[index].location.split('-').first,
                                   style: const TextStyle(
                                       fontSize: 12, color: Colors.black)),
                             ),
@@ -101,7 +101,7 @@ class _TripItineraryState extends State<TripItinerary> {
               context,
               MaterialPageRoute(
                   builder: (context) =>
-                      AddNewActivityPage(itinerary: widget.itinerary)));
+                      AddNewActivityPage(itinerary: widget.itinerary )));
           if (result == true) {
             setState(() {});
           }

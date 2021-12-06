@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+<<<<<<< HEAD
 import 'package:wanderlust_app/globals.dart';
+=======
+import 'package:wanderlust_app/pages/trip_destination_map_page.dart';
+>>>>>>> maps
 import 'package:wanderlust_app/pages/trip_gallery_page.dart';
 import 'package:wanderlust_app/pages/trip_itinerary_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -108,7 +112,9 @@ class SelectedTripPage extends StatelessWidget {
                   child:
                       makeOptionContainer(Colors.green[50], 'Destination Map'),
                   onTap: () {
-                    Navigator.pushNamed(context, '/open_map');
+                    //Navigator.pushNamed(context, '/open_map');
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => TripDestinationMap(itinerary: _activeTrip.getItinerary(),)));
                   },
                 ),
               ],

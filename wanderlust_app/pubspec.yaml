@@ -35,6 +35,10 @@ dependencies:
   firebase_storage: ^10.2.0
   
   flutter_local_notifications: ^9.1.4
+  geolocator: ^7.7.1
+  geocoding: 
+  flutter_map: 
+  latlong:
 
   #firebase_core: 
   #cloud_firestore:

@@ -36,6 +36,24 @@ class _TripGalleryState extends State<TripGallery> {
   List<CameraDescription> cameras = [];
 
   @override
+  void initState() {
+    super.initState();
+    if (currentUser != null) {
+      dbService.getUserData(uid: currentUser!.uid).then((value) {
+        UserData user = UserData.fromJson(value);
+        ssService
+            .getImageIds(uid: currentUser!.uid, tripId: globals.selectedTripId)
+            .then((pathList) {
+          gallery = pathList!;
+
+          setState(() {});
+        });
+        //print(user.trips[0].title);
+      });
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     if (currentUser != null) {
       dbService.getUserData(uid: currentUser!.uid).then((value) {
@@ -53,8 +71,10 @@ class _TripGalleryState extends State<TripGallery> {
         automaticallyImplyLeading: true,
         actions: [
           IconButton(
-            onPressed: (){setState(() {});}, 
-            icon: Icon(Icons.refresh))
+              onPressed: () {
+                setState(() {});
+              },
+              icon: Icon(Icons.refresh))
         ],
       ),
 

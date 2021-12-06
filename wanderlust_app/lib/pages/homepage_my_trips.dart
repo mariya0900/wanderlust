@@ -48,16 +48,12 @@ class _HomepageMyTripsState extends State<HomepageMyTrips> {
         title: const Text("My Trips"),
         actions: [
           IconButton(
-              onPressed: () {
-                setState(() {});
-              },
-              icon: Icon(Icons.refresh)),
-          IconButton(
-              onPressed: () {
-                fbAuthService.signOut().then((value) =>
-                    Navigator.pushReplacementNamed(context, '/start'));
-              },
-              icon: Icon(Icons.logout))
+            onPressed: () {
+              fbAuthService.signOut().then(
+                  (value) => Navigator.pushReplacementNamed(context, '/start'));
+            },
+            icon: Icon(Icons.logout),
+          )
         ],
         automaticallyImplyLeading: false,
       ),

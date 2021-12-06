@@ -18,10 +18,10 @@ class _TripDestinationMapState extends State<TripDestinationMap> {
  
   @override
   Widget build(BuildContext context) {
-    
+    //print(widget.itinerary);
     widget.locations = widget.itinerary
-        .map((e) => LatLng(double.parse(e.location.split('-')[1].split(':')[0]),
-            double.parse(e.location.split('-')[1].split(':')[1])))
+        .map((e) => LatLng(double.parse(e.location.split('/')[1].split(':')[0]),
+            double.parse(e.location.split('/')[1].split(':')[1])))
         .toList();
 
     //mapToCoordinates(widget.itinerary);

@@ -21,7 +21,7 @@ class Activity {
     List<Location> locations = await locationFromAddress(location);
     var first=locations.first;
                   //print("${first.latitude} : ${first.longitude}");
-    this.location+='-';
+    this.location+='/';
     this.location+=first.latitude.toString();
     this.location+=':';
     this.location+=first.longitude.toString();

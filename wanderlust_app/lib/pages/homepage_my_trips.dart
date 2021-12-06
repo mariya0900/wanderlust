@@ -54,7 +54,7 @@ class _HomepageMyTripsState extends State<HomepageMyTrips> {
           IconButton(
               onPressed: () {
                 fbAuthService.signOut();
-                Navigator.push(context,
+                Navigator.pushReplacement(context,
                     MaterialPageRoute(builder: (context) => MyLoginPage()));
               },
               icon: Icon(Icons.logout))

@@ -79,6 +79,8 @@ class _TripItineraryState extends State<TripItinerary> {
                 final docData = (snapshot.data.docs[0])['trips'][globals.selectedTripId]['itinerary'];
                 print((snapshot.data.docs[0])['trips'][globals.selectedTripId]['itinerary'].length);
 
+                DateTime temp = DateTime.parse(docData[index]['date']);
+
                 return Container(
                   padding: const EdgeInsets.all(10.0),
                   decoration: BoxDecoration(
@@ -118,10 +120,9 @@ class _TripItineraryState extends State<TripItinerary> {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         Text(
-                            "${docData[index]['date'].day}/${docData[index]['date'].month}/${docData[index]['date'].year}"),
+                            "${temp.day}/${temp.month}/${temp.year}"),
                         Text(
-                          "${docData[index]['startTime'].hour}:${docData[index]['startTime'].minute} - ${docData[index]['endTime'].hour}:${docData[index]['endTime'].minute}",
-                          style: const TextStyle(color: Colors.white),
+                          "${docData[index]['startTime']} - ${docData[index]['endTime']}",
                         )
                       ]),
                     

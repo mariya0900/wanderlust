@@ -20,7 +20,6 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:timezone/data/latest.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 
-
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final cameras = await availableCameras();
@@ -49,6 +48,7 @@ class MyApp extends StatelessWidget {
         '/login_successful': (context) => VerifyEmailPage(),
         '/account_verified': (context) => HomepageMyTrips(),
         '/reset_password': (context) => PasswordResetPage(),
+        '/start': (context) => MyLoginPage(),
         //'/open_map': (context) => TripDestinationMap(),
         //'/open_gallery': (context) => TripGallery(),
         //'/open_itinerary': (context) => TripItinerary(trip: _activeTrip,),

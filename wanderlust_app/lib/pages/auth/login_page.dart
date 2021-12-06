@@ -144,8 +144,17 @@ class _FormWidgetState extends State<FormWidget> {
                                               }
                                             else
                                               {
-                                                Navigator.pushNamed(context,
-                                                    '/login_successful')
+                                                if (FirebaseAuth.instance
+                                                    .currentUser!.emailVerified)
+                                                  {
+                                                    Navigator.pushNamed(context,
+                                                        '/account_verified')
+                                                  }
+                                                else
+                                                  {
+                                                    Navigator.pushNamed(context,
+                                                        '/login_successful')
+                                                  }
                                               }
                                           });
                                   //might need to give login successful the email in order to load the correct information

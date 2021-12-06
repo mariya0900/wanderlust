@@ -9,10 +9,15 @@ import 'package:geolocator/geolocator.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:latlong2/latlong.dart';
 
+import 'package:wanderlust_app/globals.dart' as globals;
+import 'package:firebase_auth/firebase_auth.dart';
+import '/services/database_service.dart';
+import '/classes/userdata.dart';
+
 class AddNewActivityPage extends StatefulWidget {
   late List<Activity> itinerary;
 
-  AddNewActivityPage({Key? key, required this.itinerary}) : super(key: key);
+  AddNewActivityPage({Key? key}) : super(key: key);
 
   @override
   State<AddNewActivityPage> createState() => _AddNewActivityPageState();
@@ -45,21 +50,23 @@ class _AddNewActivityPageState extends State<AddNewActivityPage> {
           IconButton(
             onPressed: () {
               if (_formKey.currentState!.validate()) {
-                setState(() {
-                  name = nameController.text;
-                  location=locationController.text;
-                  additionalInfo = additionalController.text;
-                  Activity newActivity = Activity(
-                      name, date, startTime, endTime, location, additionalInfo);
-                  newActivity.setLocation(location);
-                  widget.itinerary.add(newActivity);
-
-                  /*Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) =>
-                            TripDestinationMap(itinerary: widget.itinerary)));*/
-                });
+                name = nameController.text;
+                location = locationController.text;
+                additionalInfo = additionalController.text;
+                Activity newActivity = Activity(name, date, startTime, endTime, location, additionalInfo);
+                newActivity.setLocation(location);
+                
+                DatabaseService dbService = DatabaseService();
+                var currentUser = FirebaseAuth.instance.currentUser;
+                if (currentUser != null){
+                  dbService.getUserData(uid: currentUser.uid).then((value) {
+                    UserData user = UserData.fromJson(value);
+                    user.trips[globals.selectedTripId].itinerary.add(newActivity);
+                    UserData testuser = UserData(uid: currentUser.uid, trips: user.trips);
+                    dbService.addUser(user: testuser);
+                  });
+                }
+                setState(() {});
                 Navigator.pop(context, true);
               }
             },

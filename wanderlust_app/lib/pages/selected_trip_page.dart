@@ -97,11 +97,7 @@ class SelectedTripPage extends StatelessWidget {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => TripItinerary(
-                                  trip: _activeTrip,
-                                  tripID: _tripID,
-                                  itinerary: _activeTrip.getItinerary(),
-                                )));
+                            builder: (context) => TripItinerary()));
                   },
                 ),
                 GestureDetector(

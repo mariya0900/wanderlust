@@ -3,7 +3,6 @@ import 'package:flutter_map/plugin_api.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:wanderlust_app/classes/activity.dart';
 
-
 class TripDestinationMap extends StatefulWidget {
   List<Activity> itinerary;
   List<LatLng> locations = [];
@@ -15,7 +14,6 @@ class TripDestinationMap extends StatefulWidget {
 }
 
 class _TripDestinationMapState extends State<TripDestinationMap> {
- 
   @override
   Widget build(BuildContext context) {
     //print(widget.itinerary);
@@ -25,7 +23,7 @@ class _TripDestinationMapState extends State<TripDestinationMap> {
         .toList();
 
     //mapToCoordinates(widget.itinerary);
-    print(widget.locations); 
+    print(widget.locations);
     LatLng center = findCenter(widget.locations);
     return Scaffold(
         appBar: AppBar(
@@ -84,7 +82,7 @@ class _TripDestinationMapState extends State<TripDestinationMap> {
   LatLng findMin(List<LatLng> locations) {
     double minLat = 90.0;
     double minLong = 80.0;
-    
+
     for (int i = 0; i < locations.length; i++) {
       if (locations[i].latitude < minLat) {
         minLat = locations[i].latitude;

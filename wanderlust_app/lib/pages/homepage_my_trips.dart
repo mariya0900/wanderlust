@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:wanderlust_app/classes/activity.dart';
 import 'package:wanderlust_app/pages/add_new_image.dart';
 import 'package:wanderlust_app/pages/auth/login_page.dart';
 import 'package:wanderlust_app/services/auth_service.dart';

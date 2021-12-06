@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wanderlust_app/classes/activity.dart';
 import 'package:wanderlust_app/globals.dart';
 import 'package:wanderlust_app/pages/trip_destination_map_page.dart';
 import 'package:wanderlust_app/pages/trip_gallery_page.dart';
@@ -8,16 +9,46 @@ import '/services/database_service.dart';
 import '/classes/trip.dart';
 import 'package:camera/camera.dart';
 import '/classes/userdata.dart';
+import 'package:wanderlust_app/globals.dart' as globals;
 
 // The _activeTrip may have to get passed to each of navigator pushes below
 List<CameraDescription> cameras = [];
 
-class SelectedTripPage extends StatelessWidget {
+class SelectedTripPage extends StatefulWidget {
   final Trip _activeTrip;
   final int _tripID;
 
   SelectedTripPage(this._activeTrip, this._tripID, {Key? key})
       : super(key: key);
+
+  @override
+  State<SelectedTripPage> createState() => _SelectedTripPageState();
+}
+
+class _SelectedTripPageState extends State<SelectedTripPage> {
+  DatabaseService dbService = DatabaseService();
+
+  UserData user = UserData(uid: '', trips: []);
+
+  var currentUser = FirebaseAuth.instance.currentUser;
+
+  List<Trip> trips = [];
+
+  List<Activity> itinerary = [];
+
+  @override
+  void initState() {
+    super.initState();
+    if (currentUser != null) {
+      dbService.getUserData(uid: currentUser!.uid).then((value) {
+        user = UserData.fromJson(value);
+        trips = user.trips;
+        itinerary = user.trips[globals.selectedTripId].itinerary;
+        print('NEW DATA ' + itinerary.toString());
+        setState(() {});
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -65,18 +96,18 @@ class SelectedTripPage extends StatelessWidget {
                           children: <TextSpan>[
                             TextSpan(
                                 text:
-                                    '${_activeTrip.month} - ${_activeTrip.year}\n',
+                                    '${widget._activeTrip.month} - ${widget._activeTrip.year}\n',
                                 style:
                                     TextStyle(fontSize: 12, letterSpacing: 2)),
                             TextSpan(
-                                text: '${_activeTrip.title}\n',
+                                text: '${widget._activeTrip.title}\n',
                                 style: TextStyle(
                                     fontSize: 28, fontWeight: FontWeight.bold)),
                             TextSpan(
-                                text: '${_activeTrip.duration}',
+                                text: '${widget._activeTrip.duration}',
                                 style: TextStyle(fontSize: 14)),
                             TextSpan(
-                                text: '\n\n${_activeTrip.description}',
+                                text: '\n\n${widget._activeTrip.description}',
                                 style: TextStyle(fontSize: 12)),
                           ],
                         ),
@@ -105,12 +136,24 @@ class SelectedTripPage extends StatelessWidget {
                       makeOptionContainer(Colors.green[50], 'Destination Map'),
                   onTap: () {
                     //Navigator.pushNamed(context, '/open_map');
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => TripDestinationMap(
-                                  itinerary: _activeTrip.getItinerary(),
-                                )));
+                    if (currentUser != null) {
+                      dbService
+                          .getUserData(uid: currentUser!.uid)
+                          .then((value) {
+                        user = UserData.fromJson(value);
+                        trips = user.trips;
+                        itinerary =
+                            user.trips[globals.selectedTripId].itinerary;
+
+                        print('DATA' + itinerary[0].location);
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => TripDestinationMap(
+                                      itinerary: itinerary,
+                                    )));
+                      });
+                    }
                   },
                 ),
               ],
@@ -127,7 +170,7 @@ class SelectedTripPage extends StatelessWidget {
                   child: makeOptionContainer(Colors.green[50], 'Gallery'),
                   onTap: () async {
                     cameras = await availableCameras();
-                    _activeTrip.setCamera(cameras);
+                    widget._activeTrip.setCamera(cameras);
                     Navigator.push(context,
                         MaterialPageRoute(builder: (context) => TripGallery()));
                   },

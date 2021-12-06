@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-<<<<<<< HEAD
 import 'package:wanderlust_app/globals.dart';
-=======
 import 'package:wanderlust_app/pages/trip_destination_map_page.dart';
->>>>>>> maps
 import 'package:wanderlust_app/pages/trip_gallery_page.dart';
 import 'package:wanderlust_app/pages/trip_itinerary_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -40,18 +37,16 @@ class SelectedTripPage extends StatelessWidget {
                   dbService.getUserData(uid: currentUser.uid).then((value) {
                     UserData user = UserData.fromJson(value);
                     user.trips.removeAt(selectedTripId);
-                    UserData testuser = UserData(uid: currentUser.uid, trips: user.trips);
+                    UserData testuser =
+                        UserData(uid: currentUser.uid, trips: user.trips);
                     dbService.addUser(user: testuser);
                   });
                 }
                 Navigator.pop(context, true);
-            }
-          ),
+              }),
         ],
-
         automaticallyImplyLeading: true,
       ),
-
       body: Column(
         //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
@@ -69,13 +64,14 @@ class SelectedTripPage extends StatelessWidget {
                           //text: 'Hello', // default text style
                           children: <TextSpan>[
                             TextSpan(
-                                text: '${_activeTrip.month} - ${_activeTrip.year}\n',
-                                style: TextStyle(fontSize: 12, letterSpacing: 2)),
+                                text:
+                                    '${_activeTrip.month} - ${_activeTrip.year}\n',
+                                style:
+                                    TextStyle(fontSize: 12, letterSpacing: 2)),
                             TextSpan(
                                 text: '${_activeTrip.title}\n',
                                 style: TextStyle(
                                     fontSize: 28, fontWeight: FontWeight.bold)),
-                            
                             TextSpan(
                                 text: '${_activeTrip.duration}',
                                 style: TextStyle(fontSize: 14)),
@@ -113,8 +109,12 @@ class SelectedTripPage extends StatelessWidget {
                       makeOptionContainer(Colors.green[50], 'Destination Map'),
                   onTap: () {
                     //Navigator.pushNamed(context, '/open_map');
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => TripDestinationMap(itinerary: _activeTrip.getItinerary(),)));
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => TripDestinationMap(
+                                  itinerary: _activeTrip.getItinerary(),
+                                )));
                   },
                 ),
               ],

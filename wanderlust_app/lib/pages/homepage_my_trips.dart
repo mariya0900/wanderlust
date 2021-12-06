@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:wanderlust_app/pages/add_new_image.dart';
+import 'package:wanderlust_app/pages/auth/login_page.dart';
+import 'package:wanderlust_app/services/auth_service.dart';
 import '/services/database_service.dart';
 import '/classes/userdata.dart';
 import '/classes/trip.dart';
@@ -37,14 +40,24 @@ class _HomepageMyTripsState extends State<HomepageMyTrips> {
   @override
   Widget build(BuildContext context) {
     // more UI testing
+    final AuthService fbAuthService = AuthService();
 
     return Scaffold(
       appBar: AppBar(
         title: const Text("My Trips"),
         actions: [
           IconButton(
-            onPressed: (){setState(() {});}, 
-            icon: Icon(Icons.refresh))
+              onPressed: () {
+                setState(() {});
+              },
+              icon: Icon(Icons.refresh)),
+          IconButton(
+              onPressed: () {
+                fbAuthService.signOut();
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => MyLoginPage()));
+              },
+              icon: Icon(Icons.logout))
         ],
         automaticallyImplyLeading: false,
       ),

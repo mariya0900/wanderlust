@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:wanderlust_app/classes/activity.dart';
-import 'package:wanderlust_app/classes/location.dart';
+
 import 'package:wanderlust_app/pages/trip_destination_map_page.dart';
 import 'package:wanderlust_app/pages/trip_itinerary_page.dart';
 

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
-import 'package:latlong/latlong.dart';
 
-import 'location.dart';
+
+
 
 class Activity {
   // date/time, location, name, duration.

@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_map/plugin_api.dart';
-import 'package:geocoding/geocoding.dart';
-//import 'package:geocoding/geocoding.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:wanderlust_app/classes/activity.dart';
-import 'package:wanderlust_app/classes/location.dart';
+
 
 class TripDestinationMap extends StatefulWidget {
   List<Activity> itinerary;
@@ -17,24 +15,17 @@ class TripDestinationMap extends StatefulWidget {
 }
 
 class _TripDestinationMapState extends State<TripDestinationMap> {
-  /*@override
-  void initState() {
-    
-    super.initState();
-    mapToCoordinates(widget.itinerary);
-  }*/
-
+ 
   @override
   Widget build(BuildContext context) {
-    //widget.locations=widget.itinerary.map((e) => LatLng(
-    //ActivityLocation(e.location).coordinates.latitude, ActivityLocation(e.location).coordinates.longitude)).toList();
+    
     widget.locations = widget.itinerary
         .map((e) => LatLng(double.parse(e.location.split('-')[1].split(':')[0]),
             double.parse(e.location.split('-')[1].split(':')[1])))
         .toList();
 
     //mapToCoordinates(widget.itinerary);
-    print(widget.locations); // prints empty list
+    print(widget.locations); 
     LatLng center = findCenter(widget.locations);
     return Scaffold(
         appBar: AppBar(
@@ -93,8 +84,7 @@ class _TripDestinationMapState extends State<TripDestinationMap> {
   LatLng findMin(List<LatLng> locations) {
     double minLat = 90.0;
     double minLong = 80.0;
-    //double minLat;
-    //double minLong;
+    
     for (int i = 0; i < locations.length; i++) {
       if (locations[i].latitude < minLat) {
         minLat = locations[i].latitude;

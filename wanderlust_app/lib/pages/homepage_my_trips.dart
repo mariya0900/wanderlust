@@ -33,6 +33,7 @@ class _HomepageMyTripsState extends State<HomepageMyTrips> {
       dbService.getUserData(uid: currentUser!.uid).then((value) {
         user = UserData.fromJson(value);
         trips = user.trips;
+        setState(() {});
       });
     }
   }

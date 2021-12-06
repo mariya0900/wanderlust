@@ -30,7 +30,7 @@ class _TripDestinationMapState extends State<TripDestinationMap> {
     //ActivityLocation(e.location).coordinates.latitude, ActivityLocation(e.location).coordinates.longitude)).toList();
     widget.locations = widget.itinerary
         .map((e) => LatLng(double.parse(e.location.split('-')[1].split(':')[0]),
-            double.parse(e.location.split(',')[1].split(':')[1])))
+            double.parse(e.location.split('-')[1].split(':')[1])))
         .toList();
 
     //mapToCoordinates(widget.itinerary);
